@@ -1,0 +1,13 @@
+.App .wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.App .main {
+  flex: 1;
+}
+
+body {
+  user-select: none; /* 텍스트 선택 방지 */
+}

@@ -1,0 +1,595 @@
+/* 전체 컨테이너 */
+.Mypage {
+    margin: 0 auto;
+    color: #333;
+}
+
+/* 헤더 */
+.mypage-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 350px;
+    height: 250px;
+    background-color: #DEE5EC;
+    margin: 80px 0 25px 0;
+}
+
+.profile-img {
+    width: 153px;
+    height: 153px;
+    border-radius: 50%;
+    margin-right: 40px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 40px;
+}
+
+.profile-info h2 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.profile-info .profile-button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.profile-info .profile-viewer {
+    display: flex;
+    gap: 9px;
+}
+
+.mypage-header .navigation {
+    display: flex;
+    margin-top: 23px;
+    gap: 50px;
+}
+
+.mypage-header .navigation button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.mypage-header .navigation button:hover {
+    color: #222;
+}
+
+
+/* 프로필 수정 폼  */
+.profile-edit-form {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    margin-right: 50px;
+}
+
+.profile-edit-input-container{
+    width : 100%;
+    display: flex;
+    flex-direction: column; /* 기본 수직 정렬 */
+    gap: 20px; /* 라벨-인풋 세트 간 간격 */
+}
+
+
+.profile-edit-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.profile-edit-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px; /* 입력 필드 크기 증가 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.profile-edit-image-label {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+    gap: 10px; /* 파일 선택 버튼과 텍스트 사이 간격 */
+}
+
+
+.profile-edit-input-file {
+    font-size: 14px;
+    margin-top: 0px;
+}
+
+.profile-edit-buttons {
+    display: flex; 
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: flex-end;
+    gap: 10px; /* 버튼 간격 */
+    width: 50%; /* 부모 요소의 전체 너비 사용 */
+    margin-top: 35px;
+    
+}
+
+.save-button,
+.cancel-button {
+    min-width: 80px; /* 버튼 최소 너비 */
+    padding: 10px 15px; /* 버튼 내부 여백 */
+    font-size: 14px; /* 글자 크기 */
+    border-radius: 5px; /* 둥근 모서리 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer; /* 커서 변경 */
+    transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+}
+
+.save-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 95%;
+}
+
+.save-button:hover {
+    background-color: #5a6268;
+}
+
+.cancel-button {
+    background-color: #868e96;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin:0;
+    height:34px;
+
+}
+
+.cancel-button:hover {
+    background-color: #6c757d;
+}
+
+/* 탭 메뉴 */
+.mypage-tabs {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.mypage-tabs button {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.mypage-tabs button:hover {
+    color: #000;
+}
+
+.mypage-tabs .active {
+    color: #222;
+    font-weight: 600;
+}
+
+.mypage-tabs .active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 2px;
+    background-color: #222;
+    border-radius: 2px;
+}
+
+/* 콘텐츠 */
+.mypage-content {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* 여행 일정 추가 버튼 */
+.add-plan {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    height: 80px;
+    margin: 38px 0;
+    background: #F5F6FB;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 여행 계획 카드 */
+.travel-plan-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 35px;
+    padding: 15px;
+    position: relative;
+    border-bottom: 2px solid #D6D6D6;
+}
+
+.travel-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 36px;
+}
+
+.travel-details {
+    position: absolute;
+    top: 10px;
+    left: 210px;
+    z-index: 2; /* 텍스트를 이미지 위로 배치 */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.travel-details h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.travel-details p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* 옵션 버튼 */
+.options {
+    position: relative;
+    left: 950px;
+    bottom: 70px;
+}
+
+.options-button {
+    border: none;
+    background: transparent;
+    font-size: 50px;
+    cursor: pointer;
+    color: #555;
+}
+
+.options-menu {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: #fff;
+    border: 1px solid #aaa;
+    z-index: 10;
+    width: 100px;
+}
+
+.options-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    color: #AAA;
+}
+
+.options-menu button:hover {
+    color: #333;
+}
+
+/*=================*/
+/* 리뷰 탭 스타일링 */
+.myPage-reviews {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.review-card {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.review-card p {
+    font-size: 1rem;
+    color: #333;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.myPage-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.myPage-review-location-info {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.myPage-review-location-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.myPage-review-location-name span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.myPage-review-location-name > p {
+    margin: 0;
+}
+
+/* 우측 ⋮ 버튼 옵션 */
+.myPage-review-options {
+    position: relative;
+}
+
+.myPage-review-options-button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* 옵션 메뉴 스타일 */
+.myPage-review-options-menu {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    z-index: 10; 
+}
+
+.myPage-review-options-menu button {
+    padding: 8px 12px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+}
+
+.myPage-review-options-menu button:hover {
+    background-color: #f5f5f5;
+}
+
+.myPage-review-rating {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 8px; /* 별점과 제목 사이 간격 */
+}
+
+.myPage-review-content > h3 {
+    font-size: 16px;
+}
+
+.myPage-review-content > p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.myPage-review-images {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 10px; 
+    justify-content: start;
+}
+
+.myPage-review-image {
+    max-width: 120px; 
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.myPage-review-image:hover {
+    transform: scale(1.05);
+}
+
+.myPage-review-content .myPage-review-create-date {
+    font-size: 14px;
+    color: #aaa;
+    margin: 0;
+}
+
+
+/* 찜한 여행지 목록 스타일 */
+.mypage-favorite-destination h3 {
+    font-size: 22px;
+}
+
+.mypage-favorite-destination-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열로 구성 */
+    gap: 24px;  /* 카드 사이의 간격 */
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px 0 40px 0;
+  }
+
+.mypage-favorite-destination-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 63px;
+    background-color: #fff;
+}
+  
+.mypage-favorite-destination-card > a > img {
+    width: 100%;
+    height: 278px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+  
+.mypage-favorite-destination-card h4 {
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+.mypage-favorite-destination-card p {
+    font-size: 14px;
+}
+
+/* 지역 */
+.mypage-favorite-destination-info p:first-of-type {
+    padding: 2px 0;
+    font-size: 16px;
+    color: #222;
+}
+
+/* 별점 */
+.mypage-favorite-destination-star-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 2px;
+    color: #666;
+    font-size: 14px;
+}
+  
+.mypage-favorite-destination-star-icon {
+    width: 14px; /* 아이콘 크기 */
+}
+
+.mypage-favorite-destination-heart-button {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    padding-top: 6px;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 21px;
+    background: #fff;
+    text-align: center;
+}
+.mypage-favorite-destination-heart-button:hover {
+    background: #F7F8F9;
+}
+.mypage-favorite-destination-heart-icon {
+    width: 20px;
+    display: inline-block;
+}
+
+/* 태그 */
+.mypage-favorite-destination-info p:nth-of-type(2) {
+    color: #aaa;
+}
+
+/* 공통 페이지네이션 스타일 */
+.mypage-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 40px 0 100px 0;  /* 페이지 네비게이션과 카드 간 간격 */
+}
+
+.mypage-pagination button {
+    padding: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #D9D9D9;
+    font-size: 16px;
+}
+
+.mypage-pagination button:disabled {
+    color: #d6d6d6;
+    background-color: #fff;
+    border: 1px solid #d6d6d6;
+}
+
+/*.mypage-pagination button:hover:not(:disabled) {*/
+/*    background-color: #d6d6d6; !* 진한 회색 *!*/
+/*    transform: translateY(-2px); !* 버튼이 살짝 올라오는 효과 *!*/
+/*    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); !* 그림자 강조 *!*/
+/*}*/
+  
+
+.options-menu {
+    width: 110px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    z-index: 10;
+}
+
+.options-menu button {
+    background: none;
+    border: none;
+    color: #333;
+    padding: 8px 16px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.options-menu button:hover {
+    background-color: #f0f0f0;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+}

@@ -1,0 +1,37 @@
+.Home .card-container {
+    justify-content: space-between;
+}
+
+.Card {
+    margin-top: 22px;
+    cursor: pointer;
+    background-color: #fff;
+    overflow: hidden;
+    text-align: left;
+}
+
+.card-image {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-content {
+    padding: 15px 0;
+}
+
+.card-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.card-location {
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.card-description {
+    color: #777;
+    font-size: 14px;
+}

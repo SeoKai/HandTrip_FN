@@ -1,0 +1,148 @@
+/* 모달 오버레이 */
+.place-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 내용 */
+.place-modal-content {
+  background: #fff;
+  /*height: 580px;*/
+  /*padding: 36px;*/
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+
+}
+
+
+.place-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 10px 15px;
+  border-bottom: 1px solid #d6d6d6;
+  margin: 16px 0 16px 0;
+}
+
+.place-modal-header p {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 닫기 버튼 */
+.place-close-button {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.place-close-button:hover {
+  color: #ff5a5a;
+}
+
+/* 모달 바디 (중앙 정렬) */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0 30px 0 30px;
+}
+
+.modal-body h3 {
+  font-size: 1.2rem;
+}
+
+.modal-body p {
+  font-size: 0.9rem;
+}
+
+/* 이미지와 양옆 버튼을 같은 행에 배치 */
+.image-and-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* 버튼과 이미지 사이 간격 */
+  margin-top: 16px;
+  position: relative;
+}
+
+/* 이미지 스타일 */
+.place-image {
+  width: 300px;
+  height: 300px;
+}
+
+/* 양옆 네비게이션 버튼 스타일 */
+.place-nav-button {
+  background: none;
+  color: #222;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.place-nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.place-bottom {
+  margin-bottom: 36px;
+}
+
+/* 평가 버튼 스타일 */
+.rating-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.rating-button {
+  padding: 8px 14px;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 3px 0 3px;
+}
+
+.rating-button.selected {
+  background-color: #222;
+  color: #fff;
+  border: none;
+}
+
+/* 점수 제출 버튼 */
+.places-button {
+  width: 400px;
+  height: 34px;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+

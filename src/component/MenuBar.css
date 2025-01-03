@@ -1,0 +1,66 @@
+.active-link {
+  font-weight: bold;
+}
+
+.MenuBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+  height: 83px;
+  border-bottom: 1px solid #d6d6d6;
+  font-size: 17px;
+}
+
+.MenuBar .navigation {
+  display: flex;
+  gap: 72px;
+  margin-right: 50px;
+}
+
+.MainLogo img {
+  height: 45px; /* 로고 크기 조정 */
+  width: auto; /* 비율 유지 */
+}
+
+.MainLogo img {
+    height: 45px; /* 로고 크기 조정 */
+    width: auto; /* 비율 유지 */
+}
+
+.profile {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 120px;
+  padding: 5px 0;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}

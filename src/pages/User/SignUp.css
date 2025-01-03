@@ -1,0 +1,161 @@
+/* 회원가입 컨텐츠 */
+.SignUp .signup-content {
+    background: #fff;
+    padding: 20px 40px;
+    margin: 0 auto;
+    max-width: 413px;
+    /*height: 660px;*/
+    position: relative;
+}
+
+.SignUp .signup-title {
+    font-size: 25px;
+    text-align: center;
+    margin: 50px 0;
+}
+
+/* 제목 */
+.SignUp .signup-input-name {
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+/* 이메일 */
+.SignUp .signup-email-container {
+    display: flex;
+    gap: 7px;
+}
+
+/* 입력창 */
+.SignUp .signup-email-input,
+.SignUp .verificationCode-input,
+.SignUp .signup-nickname-input,
+.SignUp .signup-userphone-input,
+.SignUp .signup-pwd-input,
+.SignUp .signup-pwd-confirm-input
+{
+    padding: 12px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 45px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+}
+
+/* 중복 확인 버튼 */
+/* 인증 확인 버튼 */
+.SignUp .duplicate-check-button,
+.SignUp .verify-code-button {
+    padding: 11px;
+    width: 100px;
+    height: 45px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.SignUp .verification-check {
+    display: flex;
+    gap: 7px;
+}
+
+/* 인증번호 */
+/* 인증 번호 요청 버튼 */
+.SignUp .verification-request-button {
+    padding: 11px;
+    width: 100px;
+    height: 45px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.SignUp .verify-code-button{
+    margin-bottom: 15px;
+}
+
+/* 이메일 중복 확인 메시지 */
+/* 인증 이메일 발송 메시지 */
+/* 인증 이메일 완료 메시지 */
+.SignUp .email-check-message,
+.SignUp .verification-status-message,
+.SignUp .email-verified-message,
+.SignUp .pwd-cofirm-message,
+.SignUp .pwd-message {
+    font-size: 14px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom : 4px;
+    color: #f61a1a;
+}
+
+/* 중복 확인 버튼 - 호버 */
+/* 인증 번호 요청 버튼 - 호버 */
+/* 인증 번호 확인 버튼 - 호버 */
+.SignUp .duplicate-check-button:hover,
+.SignUp .verification-request-button:hover,
+.SignUp .verify-code-button:hover,
+.SignUp .reset-verified-button:hover {
+    background-color: #0056b3;
+}
+
+/* 인증 번호 요청 버튼 - 비활성화 */
+/* 인증 번호 확인 버튼 - 비활성화 */
+.SignUp .verification-request-button:disabled,
+.SignUp .verify-code-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.SignUp .password-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+.SignUp .phone-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.SignUp .submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.SignUp .check-button.disabled,
+.SignUp .submit-button.disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.SignUp .join-back-button {
+    margin: 10px auto;
+    display: block;
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+}
+
+.SignUp .Join-back-button:hover {
+    color: gray;
+    border-bottom: 1px solid gray;
+}

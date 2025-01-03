@@ -1,0 +1,136 @@
+/* PlanDetails.css */
+.planviewContainer {
+    padding: 40px 0;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.planviewContainer h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 30px 0;
+    /*text-align: center;*/
+}
+
+.planviewDaysContainer {
+    display: flex;
+}
+
+
+.planviewDateRange {
+    font-size: 20px;
+    margin: 30px 0;
+}
+
+.dateRange {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.planviewDailyPlan {
+    flex: 0 0 400px; /* Day 크기 줄이기 */
+    border-left: 3px solid #aaa;
+    padding-left: 20px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+/* 그룹화된 Day Row */
+.planviewDaysRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
+    gap: 25px; /* Day 간격 */
+    margin-bottom: 30px; /* 각 그룹 간 간격 */
+}
+
+.planviewDailyPlan h3 {
+    font-size: 1.3rem;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.planviewPlacesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.planviewPlaceCard {
+    display: flex;
+    border-radius: 4px;
+    width: 320px;
+    overflow: hidden;
+}
+
+.planviewPlaceImage {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.planviewPlaceInfo {
+    padding-left: 10px;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    flex: 1; /* 텍스트가 남은 공간 차지 */
+}
+
+.planviewPlaceInfo h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+
+.planviewPlaceInfo p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.planviewActionButtons {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.planviewEditButton {
+    margin: 26px;
+    display: block;
+    padding: 10px 20px;
+    background-color: #222;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Timeline marker */
+.planviewDailyPlan::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: #aaa;
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .planviewPlaceCard {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .planviewPlaceCard {
+        width: 100%;
+    }
+}

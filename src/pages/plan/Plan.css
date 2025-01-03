@@ -1,0 +1,103 @@
+.ChoiceTitle {
+    margin-top: 80px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.Choice {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 40px 0;
+}
+
+.City-img {
+    width: 250px;
+    height: 520px;
+    object-fit: cover;
+    filter: brightness(80%); /* 밝기를 조정 */
+}
+
+.CityCard a {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.cityCard .city-name {
+    display: flex; /* Flexbox 활성화 */
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: center; /* 세로 방향 중앙 정렬 */
+    align-items: center; /* 가로 방향 중앙 정렬 */
+    position: absolute; /* 부모 기준으로 위치 설정 */
+    top: 50%; /* 부모의 세로 중앙 */
+    left: 50%; /* 부모의 가로 중앙 */
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
+    line-height: 1; /* 줄 간격 조정 */
+    color: white; /* 텍스트 색상 */
+    font-weight: 320; /* 텍스트 두께 */
+    font-size: 72px; /* 텍스트 크기 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+/* Tokyo와 Osaka만 조정 */
+.city-name.adjusted {
+    transform: translate(-50%, -40%); /* 텍스트를 살짝 위아래로 조정 */
+}
+
+.cityCard {
+    opacity: 0.8;
+}
+
+.cityCard:hover {
+    transform: translateY(-10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 1;
+}
+
+.cityCards {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0 30px 0;
+}
+
+/* 툴팁 */
+.cityCard {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 103%;
+    left: 50%;
+    transform: translateX(-50%);
+    /*background-color: rgba(0, 0, 0, 0.8);*/
+    color: #000;
+    /*padding: 10px;*/
+    /*border-radius: 5px;*/
+    white-space: nowrap;
+    font-size: 1.1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    z-index: 10;
+}
+
+.cityCard:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.planButton {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: block;
+    padding: 10px 20px;
+    background-color: #222;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

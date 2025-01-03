@@ -1,0 +1,424 @@
+.Home .home-title {
+    font-size: 30px;
+    margin-bottom: 16px;
+    margin-top: 100px;
+}
+
+.Home span {
+    font-size: 18px;
+    color: #474747;
+}
+
+.Home .slide {
+    width: 100%;
+    height: 500px;
+    max-width: 1920px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.Home .slide-item {
+    width: 100%;
+    height: 720px;
+}
+
+.Home .slide-content {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.Home .slide-content a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.Home .slide-content span {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    /*text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);*/
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: white !important;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: white !important;
+}
+
+/* 문구랑 검색창 */
+.Home .section {
+    max-width: 1480px;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.Home .search {
+    text-align: center;
+}
+
+.Home .search h3 {
+    text-align: center;
+    margin-top: 80px;
+    font-size: 30px;
+}
+
+.Home .search input {
+    font-size: 17px;
+    border-radius: 6px;
+    padding-left: 13px;
+    margin-top: 30px;
+    width: 700px;
+    height: 53px;
+    border: 1px solid #d6d6d6;;
+}
+
+.home-search {
+    width: 60px;
+    height: 53px;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.Home .recommended {
+    margin-top: 140px;
+}
+
+/* 인기 여행지 추천 */
+
+.Home .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.Home .card-container {
+    display: flex;
+    gap: 74px;
+    justify-content: space-between;
+}
+
+.Home .card-container .card {
+    width: 100%;
+}
+
+/* 카테고리 전체 */
+
+/* 카테고리 섹션 스타일 */
+.Home .category-container {
+    display: flex;
+    gap: 24px; /* 큰 카드와 작은 카드 컨테이너 사이의 간격 */
+    max-width: 100%; /* 섹션의 최대 너비 설정 */
+    margin: 0 auto;
+    margin-top: 22px;
+}
+
+/* 큰 카드 스타일 */
+.Home .category-card-large {
+    width: calc(100% / 3); /* 큰 카드 너비 */
+    height: 513px; /* 큰 카드 높이 */
+    border-radius: 8px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.Home .category-card-large img {
+   width: 462px;
+    height: 516px;
+}
+
+/* 작은 카드 컨테이너 스타일 */
+.Home .small-cards-container {
+    width: calc(100% / 3 * 2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px; /* 작은 카드들 사이의 간격 */
+    /*width: 100%; !* 작은 카드 컨테이너 너비 *!*/
+}
+
+/* 공통 작은 카드 스타일 */
+.Home .category-card {
+    width: calc(50% - 12px);
+    /*width: calc(50% - 10px); !* 두 개씩 나란히 배치 (간격 고려) *!*/
+    height: 246px; /* 작은 카드 높이 */
+    border-radius: 8px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.Home .category-card img {
+    width: 440px;
+    height: 246px;
+}
+
+
+/* 공통 오버레이 */
+.category-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99.3%;
+    height: 100%;
+    border-radius: 8px;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(34, 34, 34, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+    cursor: pointer;
+}
+
+/* 카드 제목 스타일 */
+.Home .category-text {
+    position: absolute;
+    Top: 10px; /* 텍스트를 카드 하단에 배치 */
+    left: 15px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* 여행계획 전체 */
+
+/* 여행 계획 섹션 스타일 */
+.Home .travel-plan-container {
+    margin: 40px 0;
+    border: 1px solid #D6D6D6;
+    height: 515px;
+    display: flex;
+    align-items: flex-start;
+}
+
+
+/* 여행 일정 스타일 */
+.Home .travel-plan {
+    width: 50%;
+}
+
+.Home .PlanImg {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* 지도 컨테이너 스타일 */
+.Home .map-container {
+    width: 50%;
+}
+
+.Home .map-image {
+    width: 100%;
+    height: 513px;
+    object-fit: cover;
+}
+
+/* 시작하기 버튼 스타일 */
+.Home .start-button {
+    width: 200px;
+    display: block;
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    background-color: #F5F6FB;
+    color: #474747;
+    border: none;
+    border-radius: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.Home .start-button:hover {
+    background-color: #f5f5f6;
+}
+
+/* 리뷰 섹션 스타일 */
+.Home .reviews {
+    margin: 100px 0;
+    height: 1059px;
+    background-color: #D8E8F2;
+
+}
+
+.Home .reviews .innerWrap {
+    display: flex;
+    gap: 120px;
+    align-items: start;
+    padding: 70px 40px 0 40px;
+    margin: 0 auto;
+    max-width: 1480px;
+}
+
+.Home .review-title-container .title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 80px;
+    margin-bottom: 15px;
+}
+
+.Home .review-title-container .subheading {
+    font-size: 18px;
+    color: #474747;
+    display: block;
+    margin-bottom: 30px;
+}
+
+/* 리뷰 카드 레이아웃 */
+.Home .review-card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 1열 그리드 */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 24px;
+    justify-items: center;
+}
+
+.Home .review-card-container .review-card {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    max-width: 569px;
+    height: 280px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.Home .review-card:nth-child(1) {
+    grid-column: 1 / 3;
+}
+
+.Home .review-card:nth-child(2) {
+    grid-column: 2 / 4;
+}
+
+.Home .review-card:nth-child(3) {
+    grid-column: 1 / 3;
+}
+
+/* 리뷰 이미지 스타일 */
+.Home .review-image {
+    width: 224px;
+    height: 224px;
+    object-fit: cover;
+    margin: 25px;
+}
+
+/* 리뷰 내용 스타일 */
+.Home .review-content {
+    padding: 15px 15px 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Home .review-content h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.Home .review-content p {
+    font-size: 14px;
+    margin: 5px 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;         /* 최대 4줄까지 표시 */
+    -webkit-box-orient: vertical;  /* 수직 방향 설정 */
+    text-overflow: ellipsis;
+    line-height: 1.5;              /* 줄 간격 설정 */
+    max-height: calc(1.5em * 4);   /* line-height × 4줄 */
+}
+
+.Home .review-content strong {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.Home .review-content span {
+    color: #aaa;
+    font-size: 16px;
+}
+
+/* 푸터 전체 */
+/*.Home .footer {*/
+/*    width: 100%;*/
+/*    height: 298px;*/
+/*    background-color: #F7F8F9;*/
+/*}*/
+
+/*.Home .footer {*/
+/*    width: 100%;*/
+/*    max-width: 1920px;*/
+/*    height: 298px;*/
+/*    background-color: #f5f5f5;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: left;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+/*.Home .footer-content {*/
+/*    text-align: left;*/
+/*    max-width: 80%;*/
+/*    margin-left: 265px;*/
+/*}*/
+
+/*.Home .footer-logo {*/
+/*    font-size: 35px;*/
+/*    font-weight: bold;*/
+/*    color: #AAA;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.Home .footer-contact {*/
+/*    font-size: 16px;*/
+/*    color: #AAA;*/
+/*    line-height: 180%;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.Home .footer-links {*/
+/*    font-size: 14px;*/
+/*    color: #AAA;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.Home .footer-links a {*/
+/*    color: #666;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.Home  .footer-links a:hover {*/
+/*    text-decoration: underline;*/
+/*}*/
+
+/*.Home  .footer-icons {*/
+/*    font-size: 24px;*/
+/*    color: #474747;*/
+/*}*/
+
+/*.Home .social-icon {*/
+/*    margin: 0 10px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.Home .footer-icons {*/
+/*    display: flex;*/
+/*    gap: 34px;*/
+/*    position: relative;*/
+/*    bottom: 60px;*/
+/*    left: 900px;*/
+/*}*/
+

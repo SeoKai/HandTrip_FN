@@ -1,0 +1,207 @@
+/* 달력 전체 크기 조정 */
+.react-calendar {
+    margin: 0 auto;
+    width: 100%; /* 전체 너비를 100%로 설정 */
+    max-width: 600px; /* 최대 너비를 설정 */
+    font-size: 1.1rem;
+}
+
+/* 모달창 오버레이 스타일 */
+.calendar-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* 모달창 내용 스타일 */
+.calendar-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    text-align: center;
+}
+
+/* 전체 화면에 맞추기 위한 수정 */
+.calendar-container {
+    background-color: white;
+    text-align: center;
+    width: 560px; /* 화면 너비 */
+    margin: 0 auto;
+    padding: 0; /* 패딩 제거 */
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7개의 열로 구성 */
+    width: 560px; /* 캘린더 너비 꽉 채우기 */
+    margin: 0;
+    padding: 0;
+    /*border: 1px solid #f7f7f7; !* 테두리 *!*/
+    cursor: pointer;
+}
+
+.day, .weekday {
+    width: 80px;
+    height: 80px; /* 고정된 높이 */
+    display: flex;
+    flex-direction: column;
+    /*align-items: flex-start; !* 상단 정렬 *!*/
+    text-align: center;
+    /*justify-content: flex-start; !* 왼쪽 정렬 *!*/
+    /*border: 1px solid #f7f7f7; !* 칸 구분 *!*/
+    margin: 0; /* 여백 제거 */
+    padding: 5px; /* 날짜와 테두리 간격 추가 */
+    box-sizing: border-box;
+    font-size: 18px; /* 텍스트 크기 조정 */
+    color: #333;
+    /*position: relative; !* 상대 위치 설정 *!*/
+}
+
+.day:hover {
+    background-color: #dfdfdf;
+}
+
+/* 오늘 날짜 스타일 */
+.today {
+    font-weight: bold;
+    border-radius: 4px;
+    position: relative; /* 부모 요소를 기준으로 배치 */
+}
+
+.today::after {
+    content: '';
+    display: block;
+    position: absolute; /* 날짜 바로 아래에 위치 */
+    top: 33px; /* 날짜와의 간격 (적절히 조정) */
+    left: 50%; /* 가운데 정렬 */
+    transform: translateX(-50%); /* 수평 가운데 정렬 */
+    width: 6px; /* 동그라미 크기 */
+    height: 6px; /* 동그라미 크기 */
+    background-color: #222; /* 동그라미 색상 */
+    border-radius: 50%; /* 완전한 원형 */
+}
+
+.today.saturday::after {
+    background-color: #1B96FB; /* 토요일: 파란색 */
+}
+
+.today.sunday::after {
+    background-color: #FF3333; /* 일요일: 빨간색 */
+}
+
+/* 요일 스타일 */
+.weekday {
+    height: 40px;
+    font-weight: unset;
+    font-size: 18px;
+    text-align: center;
+    justify-content: center; /* 요일 텍스트 중앙 정렬 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+.sunday {
+    color: #FF3333; /* Sun 텍스트 */
+}
+
+.saturday {
+    color: #1B96FB; /* Sat 텍스트 */
+}
+
+.sunday-date {
+    color: #FF3333 !important; /* 숫자 빨간색 */
+}
+
+.saturday-date {
+    color: #1B96FB !important; /* 숫자 파란색 */
+}
+
+.holiday {
+    color: #FF3333;
+}
+
+.month {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* 이전 달과 다음 달 날짜 연하게 보이게 */
+.prev-month,
+.next-month {
+    opacity: 0.5;
+}
+
+/* 범위 안의 날짜 스타일 */
+.day.in-range {
+    background-color: #e3e3e3 !important;
+    color: #222 !important;
+    border-radius: 4px !important;
+}
+
+/* 범위의 시작 날짜 스타일 */
+.day.range-start {
+    background-color: #222 !important;
+    color: white !important;
+    border-radius: 4px !important;
+    font-weight: bold;
+}
+
+/* 범위의 끝 날짜 스타일 */
+.day.range-end {
+    background-color: #222 !important;
+    color: white !important;
+    border-radius: 4px !important;
+    font-weight: bold;
+}
+
+/* 범위 시작과 끝이 같은 날일 경우 */
+.day.range-start.range-end {
+    background-color: #222 !important;
+    border-radius: 4px !important;
+    font-weight: bold;
+}
+
+/* 월 네비게이션 스타일 */
+.month-navigation {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center; /* 버튼과 텍스트를 가운데 정렬 */
+    align-items: center;
+    gap: 25px; /* 버튼과 텍스트 사이 간격 */
+}
+
+.month-navigation button {
+    margin-top: 20px;
+    background: none;
+    color: #222;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-dates {
+    margin: 20px;
+    font-size: 1.1rem;
+    color: #222;
+    text-align: center;
+}
+
+.next-button {
+    width: 200px;
+    height: 35px;
+    border: none;
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+}

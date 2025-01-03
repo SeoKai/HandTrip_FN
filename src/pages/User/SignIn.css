@@ -1,0 +1,196 @@
+/* 로그인 컨텐츠 */
+.SignIn .signin-content {
+    position: relative;
+    background: #fff;
+    padding: 20px 40px;
+    margin: auto;
+    max-width: 413px;
+}
+
+
+/* 제목 스타일 */
+.SignIn .signin-title {
+    font-size: 25px;
+    text-align: center;
+    margin: 50px 0;
+}
+
+.SignIn .inputName {
+    margin-bottom: 6px;
+}
+
+/* 입력 필드 스타일 */
+.SignIn form input {
+    width: 100%;
+    height: 45px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+}
+
+/* 로그인 버튼 스타일 */
+.SignIn .submit-button {
+    font-size: 16px;
+    width: 100%;
+    height: 48px;
+    background-color: #222;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 17px 0 13px 0;
+}
+
+/* 로그인 링크 컨테이너 */
+.SignIn .login-links-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+/* 회원가입 링크 스타일 */
+.SignIn .signup-link {
+    color: #222;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 아이디 찾기 및 비밀번호 찾기 링크 컨테이너 */
+.SignIn .find-links {
+    color: #aaa;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+}
+
+/* 각 링크 스타일 */
+.SignIn .find-id-link,
+.SignIn .find-password-link {
+    cursor: pointer;
+}
+
+/* 구분자 스타일 */
+.SignIn .divider {
+    color: #aaa;
+}
+
+/* 링크 호버 효과 */
+.SignIn .signup-link:hover,
+.SignIn .find-id-link:hover,
+.SignIn .find-password-link:hover {
+    text-decoration: underline;
+}
+
+
+/* 구분자 스타일 */
+.SignIn .divider {
+    color: #ccc;
+}
+
+
+.SignIn nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.SignIn nav ul li {
+    cursor: pointer;
+}
+
+.SignIn .login-menu:hover {
+    text-decoration: underline;
+}
+
+/* 소셜 로그인 섹션 */
+.SignIn .social-login {
+    text-align: center;
+}
+
+.SignIn .social-icons img {
+    width: 40px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/* 전체 컨테이너 */
+.SignIn .social-login-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* 좌우 선 스타일 */
+.SignIn .divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: #D6D6D6; /* 연한 회색 선 */
+}
+
+/* 텍스트 스타일 */
+.SignIn .divider-text {
+    padding: 0 15px; /* 좌우 간격을 줘서 텍스트와 선을 분리 */
+    color: #D6D6D6;     /* 텍스트 색상 */
+    font-size: 14px;
+}
+
+/* 소셜 로그인 아이콘 컨테이너 */
+.SignIn .social-icons {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 25px 0;
+}
+
+/* 아이콘 박스 스타일 */
+.SignIn .kakao-box {
+    width: 50px;
+    height: 50px;
+    background-color: #FFDD1A; /* 박스 배경색 */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px; /* 박스 테두리 둥글게 */
+    cursor: pointer;
+}
+
+.SignIn .naver-box {
+    width: 50px;
+    height: 50px;
+    background-color: #03C75B; /* 박스 배경색 */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px; /* 박스 테두리 둥글게 */
+    cursor: pointer;
+}
+
+.SignIn .google-box {
+    width: 50px;
+    height: 50px;
+    background-color: #FCFCFC; /* 박스 배경색 */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px; /* 박스 테두리 둥글게 */
+    cursor: pointer;
+}
+
+/* 아이콘 이미지 스타일 */
+.SignIn .naver-box img {
+    width: 26px;
+    height: 26px;
+}
+.SignIn .google-box img {
+    width: 30px;
+    height: 30px;
+}
+
+.SignIn .kakao-box img {
+    width: 32px;
+    height: 32px;
+}

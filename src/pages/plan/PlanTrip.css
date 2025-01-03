@@ -1,0 +1,441 @@
+/* 전체 컨테이너 스타일 */
+.planTripContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* 메인 콘텐츠 영역 */
+.mainContent {
+  display: flex;
+  gap: 10px; /* 섹션 간 간격 */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 왼쪽 섹션: 날짜별 선택된 장소 */
+.selectedList {
+  width: 400px;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #dee2e6;
+  overflow-y: auto;
+}
+
+.scheduleHeader {
+  padding: 0 0 16px 7px;
+}
+
+.scheduleHeader h3 {
+  font-size: 20px;
+  color: #222;
+  margin: 0;
+}
+
+.dailyPlanContainer {
+  margin-bottom: 26px;
+  padding: 10px;
+}
+
+.dailyPlanContainer h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    width: 400px;
+    height: 200px;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.SaveTitleButton{
+    margin-right: 30px;
+}
+
+.SaveTitleButton, .CancellationButton {
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.plannerTitleInput {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Day 헤더 스타일 */
+.dayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dayHeader h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+  margin: 0;
+}
+
+.dateLabel {
+  font-size: 14px;
+  color: #777;
+  font-weight: normal;
+}
+
+.addPlaceButton {
+  width: 100%;
+  height: 52px;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #474747;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.addPlaceButton.active {
+    background-color: #dee5ec;
+    border: 1px solid #dee5ec;
+    color: #222;
+}
+
+/* 추가된 여행지 목록 스타일 */
+.addedPlacesList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.selectedPlaceCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #aaa;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.selectedPlaceCard .placeText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1; /* 텍스트 영역이 남은 공간을 차지하게 함 */
+}
+
+/* 삭제 버튼 스타일 */
+.selectedPlaceCard button {
+  color: #222;
+  border: none;
+  background: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.completeButton {
+    margin: 10px 0 0 10px;
+    width: 320px;
+    height: 52px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    background-color: #222;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.plan-button {
+    margin-left: 10px;
+    width: 95%;
+    height: 52px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    background-color: #222;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* 중앙 섹션: 장소 목록 */
+.placeList {
+  width: 570px; /* 너비를 원하는 크기로 설정 */
+  background: #fff;
+  padding: 15px;
+  border-right: 1px solid #dee2e6;
+  overflow-y: auto;
+}
+
+.placeList h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 29px;
+  color: #333;
+}
+
+/* 검색 바 스타일 */
+.searchBar {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 26px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 카테고리 태그 스타일 */
+.categoryTags {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4개의 열 생성 */
+  gap: 10px 15px; /* 세로와 가로 간격 설정 */
+  justify-items: center; /* 아이템들을 가운데 정렬 */
+  max-width: 350px; /* 전체 컨테이너 최대 너비 설정 */
+  margin-bottom: 16px;
+}
+
+/* 각 카테고리 태그 스타일 */
+.categoryTag {
+  width: 100px;
+  height: 35px;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #dee5ec;
+  border-radius: 22px;
+  cursor: pointer;
+  color: #222;
+  text-align: center;
+  line-height: 30px; /* 텍스트를 세로 중앙에 오도록 설정 */
+}
+
+/* 선택된 카테고리 태그 스타일 */
+.categoryTag.selected {
+  background-color: #dee5ec;
+  color: #222;
+}
+
+/* 장소 아이템 스타일 */
+
+.placeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.placeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.placeName {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.placeRating,
+.placeAddress,
+.placeDescription {
+  width: 350px;
+  font-size: 14px;
+  color: #555;
+  margin: 3px 0;
+}
+
+.toggleText {
+  display: block;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 5px;
+  text-decoration: underline;
+  width: fit-content;
+}
+
+.toggleText:hover {
+  color: #222;
+}
+
+/* 추가 버튼 스타일 */
+.placeItem button {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  width: 32px;
+  height: 66px;
+  background: #f5f6fb;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+
+.placeItem button:hover {
+  background: #dee5ec;
+}
+
+.mapContainer {
+    flex: 1; /* 지도 크기 조절 */
+    height: 100%;
+}
+
+.mapContainer .fullMap {
+  width: 100%;
+  height: 100%;
+}
+
+.viewPlanButtonContainer {
+    position: relative; /* 부모 컨테이너 안에 배치 */
+    text-align: center; /* 가운데 정렬 */
+    margin-top: 10px; /* 지도 아래 여백 */
+    left: 590px;
+}
+
+.viewPlanButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #222; /* 기본 색상 */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.planLoadMoreContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.planLoadMoreButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #474747;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.plantripLoadMoreButton::before,
+.plantripLoadMoreButton::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #aaa;
+    margin: 0 10px;
+}
+
+/*.viewPlanButtonContainer {*/
+/*    position: relative;*/
+/*    flex: 0; !* 버튼 높이 차지 *!*/
+/*    display: flex;*/
+/*    justify-content: center; !* 버튼 가운데 정렬 *!*/
+/*    align-items: center;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/* 이미지 전체 css */
+
+/* 장소 목록 이미지 스타일 */
+.placeImage {
+  width: 85px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+/* 날짜별 선택된 장소 이미지 스타일 */
+.selectedPlaceCard .placeImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+/* InfoWindow 이미지 스타일 */
+.infoWindowImage {
+  justify-content: center;
+  justify-items: center;
+  width: 170px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+/* InfoWindow 내용 스타일 */
+.infoWindowContent {
+  max-width: 170px;
+  text-align: center;
+}
+
+/* 수정 취소 버튼 */
+.plan-cancel-button {
+    margin: 20px 0 0 10px;
+    width: 95%;
+    height: 52px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: #222;
+    background-color: #eee;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
