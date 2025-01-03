@@ -26,6 +26,11 @@ const MyPage = () => {
 
   // 사용자가 업로드한 이미지를 압축함
   const handleImageUpload = (file) => {
+    if (!file) {
+      console.log("업로드할 파일이 없습니다.");
+      return;
+    }
+
     const validImageTypes = [
       "image/jpeg",
       "image/png",
@@ -51,29 +56,25 @@ const MyPage = () => {
     };
     reader.readAsDataURL(file);
 
-    // 압축 옵션 설정
-    const options = {
-      maxWidthOrHeight: 800, // 최대 너비 또는 높이 설정
-      useWebWorker: true, // 웹 워커 사용
-      maxSizeMB: 5, // 최대 파일 크기 (MB 단위)
-      quality: 0.6, // 품질 설정 (0.0 ~ 1.0)
-    };
-
-    // 이미지 압축
-    imageCompression(file, options)
-      .then((compressedBlob) => {
-        // 압축된 파일 이름 복원
-        const restoredFile = new File([compressedBlob], file.name, {
-          type: file.type,
-          lastModified: Date.now(),
+    new Compressor(file, {
+      quality: 0.6,
+      maxWidth: 800,
+      maxHeight: 800,
+      success: (compressedFile) => {
+        // 파일 이름 복원
+        const restoredFile = new File([compressedFile], file.name, {
+          type: compressedFile.type,
         });
 
-        setCompressedImage(restoredFile); // 복원된 파일 설정
-      })
-      .catch((err) => {
+        // 파일을 상태에 저장
+        setCompressedImage(restoredFile);
+      },
+      error: (err) => {
         console.error("이미지 압축 실패: ", err);
-      });
+      },
+    });
   };
+
 
   // 유저 프로필 데이터
   const [userProfile, setUserProfile] = useState({
