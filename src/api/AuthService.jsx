@@ -1,10 +1,5 @@
 import axios from "axios";
 
-const BASE_URL = "http://13.209.114.27:5050/api/auth";
-
-// Axios 기본 설정
-axios.defaults.baseURL = BASE_URL;
-
 // **AccessToken으로 보호된 리소스 요청**
 export const fetchProtectedResource = async (url) => {
   try {

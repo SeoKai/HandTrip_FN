@@ -11,6 +11,7 @@ const SignUp = () => {
     userPassword: "",
     userPhone: "",
     userNickname: "",
+    userNickname: "",
     userPasswordConfirm: "",
   });
   const { setUser, setIsAuthenticated } = useContext(AuthContext); // React 상태 업데이트 함수
@@ -74,7 +75,7 @@ const SignUp = () => {
     }
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/user/duplicate-email",
+        `${process.env.REACT_APP_BASE_URL}/user/duplicate-email`,
         { userEmail: formData.userEmail }
       );
       const isDuplicate = response.data;
@@ -98,7 +99,7 @@ const SignUp = () => {
     setIsFirstRequest(false);
 
     try {
-      await axios.post("http://13.209.114.27:5050/api/email/send", {
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/api/email/send`, {
         userEmail: formData.userEmail,
         mode: "verify",
       });
@@ -120,7 +121,7 @@ const SignUp = () => {
   const handleVerifyCode = async () => {
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/email/verify",
+        `${process.env.REACT_APP_BASE_URL}/api/email/verify`,
         {
           userEmail: formData.userEmail,
           code: verificationCode,
@@ -202,7 +203,7 @@ const SignUp = () => {
       };
 
       const response = await axios.post(
-        "http://13.209.114.27:5050/user/register",
+        `${process.env.REACT_APP_BASE_URL}/user/register`,
         payload
       );
       const { accessToken, refreshToken, accessTokenExpiry } = response.data;

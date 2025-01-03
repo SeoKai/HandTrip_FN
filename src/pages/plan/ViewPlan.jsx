@@ -18,7 +18,7 @@ function ViewPlan() {
           alert("로그인이 필요합니다.");
         }
         const response = await axios.get(
-          `http://13.209.114.27:5050/api/planner/${plannerId}`,
+          `${process.env.REACT_APP_BASE_URL}/api/planner/${plannerId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

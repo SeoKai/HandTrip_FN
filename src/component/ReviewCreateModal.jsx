@@ -111,7 +111,7 @@ const ReviewCreateModal = ({
     if (imageFiles.length > 0) {
       try {
         const response = await axios.post(
-          "http://13.209.114.27:5050/reviews/uploadReviewImage",
+          `${process.env.REACT_APP_BASE_URL}/reviews/uploadReviewImage`,
           formData,
           {
             headers: {
@@ -148,7 +148,7 @@ const ReviewCreateModal = ({
 
       if (currentMode === "create") {
         await axios.post(
-          "http://13.209.114.27:5050/reviews/create",
+          `${process.env.REACT_APP_BASE_URL}/reviews/create`,
           reviewDto,
           {
             headers: {
@@ -162,7 +162,7 @@ const ReviewCreateModal = ({
         responseStatus = "success"; // 성공 시 상태 변경
       } else if (currentMode === "edit") {
         await axios.put(
-          `http://13.209.114.27:5050/reviews/${initialData.reviewId}/edit`,
+          `${process.env.REACT_APP_BASE_URL}/reviews/${initialData.reviewId}/edit`,
           reviewDto,
           {
             headers: {
