@@ -30,7 +30,7 @@ function FindId() {
       if (!canResend) return; // 재발급 제한 시간 중일 때는 버튼 클릭 방지
 
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/phone/send-one",
+        "http://localhost:5050/api/phone/send-one",
         {
           phoneNumber: phoneNumber,
         }
@@ -58,7 +58,7 @@ function FindId() {
   const handleVerifyCode = async () => {
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/phone/verify",
+        "http://localhost:5050/api/phone/verify",
         {
           phoneNumber: phoneNumber.trim(),
           code: code.trim(),
@@ -89,7 +89,7 @@ function FindId() {
     try {
       const formattedPhoneNumber = formatPhoneNumber(phoneNumber); // 전화번호 포맷팅
       const response = await axios.post(
-        "http://13.209.114.27:5050/user/find-Email",
+        "http://localhost:5050/user/find-Email",
         {
           isVerified: "true",
           phoneNumber: formattedPhoneNumber,

@@ -25,7 +25,7 @@ const PlannerList = () => {
         }
 
         const response = await axios.get(
-          "http://13.209.114.27:5050/api/planner/user/plans",
+          "http://localhost:5050/api/planner/user/plans",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ const PlannerList = () => {
         return;
       }
 
-      await axios.delete(`http://13.209.114.27:5050/api/planner/${plannerId}`, {
+      await axios.delete(`http://localhost:5050/api/planner/${plannerId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
         },

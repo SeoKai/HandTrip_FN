@@ -21,7 +21,7 @@ const usePlanData = (regionId, currentPage, searchTerm, categoryFilter) => {
     if (!regionId) return; // regionId가 없으면 요청하지 않음
 
     axios
-      .get("http://13.209.114.27:5050/api/locations/searchLocation", {
+      .get("http://localhost:5050/api/locations/searchLocation", {
         params: {
           regionId,
           page: reset ? 0 : currentPage - 1, // 초기화 시 첫 페이지로

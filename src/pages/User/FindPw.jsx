@@ -81,7 +81,7 @@ function FindPw() {
     setIsFirstRequest(false);
 
     try {
-      await axios.post("http://13.209.114.27:5050/api/email/send", {
+      await axios.post("http://localhost:5050/api/email/send", {
         userEmail: formData.userEmail,
         userPhone: formData.userPhone,
         mode: "findPassword",

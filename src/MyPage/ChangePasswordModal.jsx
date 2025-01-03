@@ -25,7 +25,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
 
     try {
       const response = await fetch(
-        "http://13.209.114.27:5050/user/change-password",
+        "http://localhost:5050/user/change-password",
         {
           method: "POST",
           headers: {

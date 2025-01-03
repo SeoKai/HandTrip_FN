@@ -61,7 +61,6 @@ const ReviewCreateModal = ({
 
         // 이미지 압축
         const compressedBlob = await imageCompression(file, options);
-        console.log(compressedBlob);
 
         // Blob을 File 객체로 변환하면서 원래 이름 복원
         const compressedFile = new File([compressedBlob], file.name, {
@@ -111,7 +110,7 @@ const ReviewCreateModal = ({
     if (imageFiles.length > 0) {
       try {
         const response = await axios.post(
-          "http://13.209.114.27:5050/reviews/uploadReviewImage",
+          "http://localhost:5050/reviews/uploadReviewImage",
           formData,
           {
             headers: {
@@ -148,7 +147,7 @@ const ReviewCreateModal = ({
 
       if (currentMode === "create") {
         await axios.post(
-          "http://13.209.114.27:5050/reviews/create",
+          "http://localhost:5050/reviews/create",
           reviewDto,
           {
             headers: {
@@ -162,7 +161,7 @@ const ReviewCreateModal = ({
         responseStatus = "success"; // 성공 시 상태 변경
       } else if (currentMode === "edit") {
         await axios.put(
-          `http://13.209.114.27:5050/reviews/${initialData.reviewId}/edit`,
+          `http://localhost:5050/reviews/${initialData.reviewId}/edit`,
           reviewDto,
           {
             headers: {

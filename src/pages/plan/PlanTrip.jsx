@@ -216,7 +216,7 @@ function PlanTrip() {
         return;
       }
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/planner/save",
+        "http://localhost:5050/api/planner/save",
         plannerData,
         {
           headers: {

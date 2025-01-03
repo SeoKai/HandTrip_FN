@@ -74,7 +74,7 @@ const SignUp = () => {
     }
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/user/duplicate-email",
+        "http://localhost:5050/user/duplicate-email",
         { userEmail: formData.userEmail }
       );
       const isDuplicate = response.data;
@@ -98,7 +98,7 @@ const SignUp = () => {
     setIsFirstRequest(false);
 
     try {
-      await axios.post("http://13.209.114.27:5050/api/email/send", {
+      await axios.post("http://localhost:5050/api/email/send", {
         userEmail: formData.userEmail,
         mode: "verify",
       });
@@ -120,7 +120,7 @@ const SignUp = () => {
   const handleVerifyCode = async () => {
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/email/verify",
+        "http://localhost:5050/api/email/verify",
         {
           userEmail: formData.userEmail,
           code: verificationCode,
@@ -202,7 +202,7 @@ const SignUp = () => {
       };
 
       const response = await axios.post(
-        "http://13.209.114.27:5050/user/register",
+        "http://localhost:5050/user/register",
         payload
       );
       const { accessToken, refreshToken, accessTokenExpiry } = response.data;

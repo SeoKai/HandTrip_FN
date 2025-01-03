@@ -29,7 +29,7 @@ const RandomPlaces = () => {
     console.log("Loading RandomPlaces data...");
     setLoading(true);
     axios
-      .get("http://13.209.114.27:5050/api/ai/random-places")
+      .get("http://localhost:5050/api/ai/random-places")
       .then((response) => {
         setPlaces(response.data);
         setLoading(false); // 로딩 종료
@@ -64,7 +64,7 @@ const RandomPlaces = () => {
     }));
 
     try {
-      await axios.post("http://13.209.114.27:5050/api/ai/rating", payload, {
+      await axios.post("http://localhost:5050/api/ai/rating", payload, {
         headers: {
           Authorization: `Bearer ${token}`, // JWT 포함
         },

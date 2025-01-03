@@ -85,7 +85,7 @@ const MyPage = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        "http://13.209.114.27:5050/api/userProfile/get",
+        "http://localhost:5050/api/userProfile/get",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -117,7 +117,7 @@ const MyPage = () => {
 
     try {
       const response = await axios.post(
-        "http://13.209.114.27:5050/api/userProfile/uploadProfileImage",
+        "http://localhost:5050/api/userProfile/uploadProfileImage",
         formData,
         {
           headers: {
@@ -134,7 +134,7 @@ const MyPage = () => {
 
       // 프로필 이미지 URL 업데이트된 객체로 서버에 프로필 업데이트 요청
       const updateResponse = await axios.put(
-        "http://13.209.114.27:5050/api/userProfile",
+        "http://localhost:5050/api/userProfile",
         updatedProfile,
         {
           headers: {
@@ -215,7 +215,7 @@ const MyPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://13.209.114.27:5050/reviews/getReviewsWithLocation",
+        "http://localhost:5050/reviews/getReviewsWithLocation",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -322,7 +322,7 @@ const MyPage = () => {
         }
 
         const response = await axios.get(
-          "http://13.209.114.27:5050/api/planner/user/plans",
+          "http://localhost:5050/api/planner/user/plans",
           {
             headers: {
               Authorization: `Bearer ${token}`, // 토큰 포함
@@ -388,7 +388,7 @@ const MyPage = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `http://13.209.114.27:5050/reviews/delete/${reviewId}`,
+          `http://localhost:5050/reviews/delete/${reviewId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -436,7 +436,7 @@ const MyPage = () => {
         return;
       }
 
-      await axios.delete(`http://13.209.114.27:5050/api/planner/${plannerId}`, {
+      await axios.delete(`http://localhost:5050/api/planner/${plannerId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // 토큰 포함
         },
@@ -462,7 +462,7 @@ const MyPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://13.209.114.27:5050/api/locationFavorite/userFavorites",
+        "http://localhost:5050/api/locationFavorite/userFavorites",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -502,7 +502,7 @@ const MyPage = () => {
       if (targetLocation.isFavorite) {
         // 찜 취소 요청
         await axios.delete(
-          "http://13.209.114.27:5050/api/locationFavorite/delete",
+          "http://localhost:5050/api/locationFavorite/delete",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -514,7 +514,7 @@ const MyPage = () => {
       } else {
         // 찜 추가 요청
         await axios.post(
-          "http://13.209.114.27:5050/api/locationFavorite/add",
+          "http://localhost:5050/api/locationFavorite/add",
           {
             locationId,
           },
