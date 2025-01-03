@@ -46,8 +46,13 @@ const MyPage = () => {
       maxWidth: 800,
       maxHeight: 800,
       success: (compressedFile) => {
+        // 파일 이름 복원
+        const restoredFile = new File([compressedFile], file.name, {
+          type: compressedFile.type,
+        });
+
         // 파일을 상태에 저장
-        setCompressedImage(compressedFile);
+        setCompressedImage(restoredFile);
       },
       error: (err) => {
         console.error("이미지 압축 실패: ", err);
