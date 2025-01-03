@@ -27,7 +27,7 @@ export const fetchProtectedResource = async (url) => {
 // **로그인 요청**
 export const login = async (credentials) => {
   try {
-    const response = await axios.post("/login", {
+    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/login`, {
       userEmail: credentials.userEmail,
       userPassword: credentials.userPassword,
     });
