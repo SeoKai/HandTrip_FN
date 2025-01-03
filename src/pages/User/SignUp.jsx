@@ -127,6 +127,7 @@ const SignUp = () => {
           code: verificationCode,
         }
       );
+
       if (response.data === "인증에 성공했습니다.") {
         alert("이메일 인증에 성공했습니다.");
         setIsEmailVerified(true);
