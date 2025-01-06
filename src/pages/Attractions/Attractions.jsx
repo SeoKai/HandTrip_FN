@@ -375,184 +375,166 @@ const Attractions = () => {
 
   return (
     <div className="Attraction">
-      <div className="title-container">
-        <h2>관광지 및 여행시설</h2>
-      </div>
-      <div className="button-container">
-        <h3>지역선택</h3>
-        <div className="region-container">
-          {/*전체 버튼 추가 - 기본 선택*/}
-          <button
-            key={0}
-            className={`button ${selectedRegion === null ? "selected" : ""}`}
-            onClick={() => handleRegionClick(null)}
-          >
-            전체
-          </button>
-          {regions.map((region) => (
-            <button
-              key={region.regionId}
-              className={`button ${
-                selectedRegion === region.regionId ? "selected" : ""
-              }`}
-              onClick={() => handleRegionClick(region.regionId)}
-            >
-              {region.regionName}
-            </button>
-          ))}
-        </div>
-
-        <h3>관심 있는 카테고리 선택 (최대 3개)</h3>
-        <div className="tag-button-container">
-          {tags.map((tag) => (
-            <button
-              key={tag.tagId}
-              className={`button ${
-                selectedTags.includes(tag.tagId) ? "selected" : ""
-              }`}
-              onClick={() => handleTagButtonClick(tag.tagId)}
-              disabled={
-                selectedTags.length >= 3 && !selectedTags.includes(tag.tagId)
-              }
-            >
-              {/* 태그 버튼들 */}
-              {tag.tagName}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="search-container">
-        {/* 검색입력창 */}
-        <p className="result">
-          총 <span>{totalElements}</span>건
-        </p>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="검색어를 입력하세요"
-          value={searchTerm}
-          onChange={handleSearchChange} // 검색어 입력 시 처리
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              // 엔터 키 감지
-              handleSearchSubmit();
-            }
-          }}
-        />
-        <button onClick={() => handleSubmit(0)} className="search-button">
-          검색
-        </button>
-        {/* 검색 버튼 클릭 시 요청 */}
-      </div>
-
-      {/* 로딩 상태 표시 */}
-      {loading && <div>Loading...</div>}
-
-      {/* 지역 정보 리스트 */}
-      <div className="locations-container">
-        {locations.length > 0 ? (
-          <div className="card-container">
-            {locations.map((location, index) => (
-              <div className="location-card" key={index}>
-                <div
-                  className="like"
-                  onClick={() => handleLikeClick(location.locationId)}
-                >
-                  {/* 좋아요 상태에 따라 아이콘 변경 */}
-                  <img
-                    src={
-                      likedLocations.includes(location.locationId)
-                        ? heartFilled
-                        : heart
-                    }
-                    alt="찜 아이콘"
-                  />
-                </div>
-                <Link to={`/attractionDetail/${location.locationId}`}>
-                  <img
-                    src={location.placeImgUrl}
-                    alt={location.locationName}
-                    className="location-image"
-                  />
-                </Link>
-
-                <div className="location-info">
-                  <Link to={`/attractionDetail/${location.locationId}`}>
-                    <h4>{location.locationName}</h4>
-                  </Link>
-                  <p>{location.regionName}</p>
-                  <p>
-                    <img
-                      src={starColor}
-                      alt="별 아이콘"
-                      className="star-icon"
+            <div className="title-container">
+                <h2>관광지 및 여행시설</h2>
+                <div className="search-container">
+                    {/* 검색입력창 */}
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="여행지 이름, 지역 검색"
+                        value={searchTerm}
+                        onChange={handleSearchChange}  // 검색어 입력 시 처리
+                        onKeyDown={(event) => {
+                            if (event.key === 'Enter') {  // 엔터 키 감지
+                                handleSearchSubmit();
+                            }
+                        }}
                     />
-                    <span>구글리뷰 {location.googleRating}</span>(
-                    {location.userRatingsTotal})
-                  </p>
-                  <p>{"#" + location.tags.join(" #")}</p>
-                  {/* Link로 이동하면서 location 정보를 state로 전달 */}
-                  {/*<Link to={`/attractionDetail/${location.locationId}`}>*/}
-                  {/*    상세 보기*/}
-                  {/*</Link>*/}
+                    <button onClick={() => handleSubmit(0)} className="search-button">검색</button>
+                    {/* 검색 버튼 클릭 시 요청 */}
                 </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>해당하는 검색어 또는 카테고리에 맞는 여행지가 없습니다.</p>
-        )}
-      </div>
+            </div>
+            <div className="attraction-inner-wrap">
+                <div className="button-container">
+                    <h3>지역선택</h3>
+                    <div className="region-container">
+                        {/*전체 버튼 추가 - 기본 선택*/}
+                        <button
+                            key={0}
+                            className={`button ${selectedRegion === null ? 'selected' : ''}`}
+                            onClick={() => handleRegionClick(null)}
+                        >
+                            전체
+                        </button>
+                        {regions.map((region) => (
+                            <button
+                                key={region.regionId}
+                                className={`button ${selectedRegion === region.regionId ? 'selected' : ''}`}
+                                onClick={() => handleRegionClick(region.regionId)}
+                            >
+                                {region.regionName}
+                            </button>
+                        ))}
+                    </div>
 
-      {/* 페이지 네비게이션 */}
-      <div className="pagination">
-        <button
-          onClick={() => handlePageChange(0)}
-          disabled={currentPage === 0} // 첫 페이지에서는 이전 버튼 비활성화
-        >
-          <img src={angleDoubleSmallLeft} alt="처음" />
-        </button>
+                    <h3>관심 있는 카테고리 선택 (최대 3개)</h3>
+                    <div className="tag-button-container">
+                        {tags.map((tag) => (
+                            <button
+                                key={tag.tagId}
+                                className={`button ${selectedTags.includes(tag.tagId) ? 'selected' : ''}`}
+                                onClick={() => handleTagButtonClick(tag.tagId)}
+                                disabled={selectedTags.length >= 3 && !selectedTags.includes(tag.tagId)}
+                            >
+                                {/* 태그 버튼들 */}
+                                {tag.tagName}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <div className="search-result-container">
+                    {/* 검색입력창 */}
+                    <p className="result">총 <span>{totalElements}</span>건</p>
+                </div>
 
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          <img src={angleSmallLeft} alt="이전" />
-        </button>
+                {/* 로딩 상태 표시 */}
+                {loading && <div>Loading...</div>}
 
-        {/* ... 표시 */}
-        {currentPage > 2 && <span>...</span>}
+                {/* 지역 정보 리스트 */}
+                <div className="locations-container">
+                    {locations.length > 0 ? (
+                        <div className="card-container">
+                            {locations.map((location, index) => (
+                                <div className="location-card" key={index}>
+                                    <div className="like" onClick={() => handleLikeClick(location.locationId)}>
+                                        {/* 좋아요 상태에 따라 아이콘 변경 */}
+                                        <img
+                                            src={likedLocations.includes(location.locationId) ? heartFilled : heart}
+                                            alt="찜 아이콘"
+                                        />
+                                    </div>
+                                    <Link to={`/attractionDetail/${location.locationId}`}>
+                                        <img
+                                            src={location.placeImgUrl}
+                                            alt={location.locationName}
+                                            className="location-image"
+                                        />
+                                    </Link>
 
-        {/* 페이지 번호들 (현재 페이지를 기준으로 범위 생성) */}
-        {generatePageNumbers().map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => handlePageChange(pageNumber)}
-            className={currentPage === pageNumber ? "active" : ""}
-          >
-            {pageNumber + 1} {/* 페이지 번호 출력 (1부터 시작) */}
-          </button>
-        ))}
+                                    <div className="location-info">
+                                        <Link to={`/attractionDetail/${location.locationId}`}>
+                                            <h4>{location.locationName}</h4>
+                                        </Link>
+                                        <p>{location.regionName}</p>
+                                        <p>
+                                            <img src={starColor} alt="별 아이콘" className="star-icon"/>
+                                            <span>구글리뷰 {location.googleRating}</span>
+                                            ({location.userRatingsTotal})
+                                        </p>
+                                        <p>{'#' + location.tags.join(' #')}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>해당하는 검색어 또는 카테고리에 맞는 여행지가 없습니다.</p>
+                    )}
+                </div>
 
-        {/* '...' 표시 */}
-        {totalPages > 5 && currentPage > 2 && currentPage < totalPages - 3 && (
-          <span>...</span>
-        )}
+                {/* 페이지 네비게이션 */}
+                <div className="pagination">
+                    <button
+                        onClick={() => handlePageChange(0)}
+                        disabled={currentPage === 0}  // 첫 페이지에서는 이전 버튼 비활성화
+                    >
+                        <img src={angleDoubleSmallLeft} alt="처음"/>
+                    </button>
 
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages - 1} // 마지막 페이지에서는 다음 버튼 비활성화
-        >
-          <img src={angleSmallRight} alt="다음" />
-        </button>
-        <button
-          onClick={() => handlePageChange(totalPages - 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          <img src={angleDoubleSmallRight} alt="끝" />
-        </button>
-      </div>
-    </div>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 0}
+                    >
+                        <img src={angleSmallLeft} alt="이전"/>
+                    </button>
+
+                    {/* ... 표시 */}
+                    {currentPage > 2 && (
+                        <span>...</span>
+                    )}
+
+                    {/* 페이지 번호들 (현재 페이지를 기준으로 범위 생성) */}
+                    {generatePageNumbers().map((pageNumber) => (
+                        <button
+                            key={pageNumber}
+                            onClick={() => handlePageChange(pageNumber)}
+                            className={currentPage === pageNumber ? 'active' : ''}
+                        >
+                            {pageNumber + 1} {/* 페이지 번호 출력 (1부터 시작) */}
+                        </button>
+                    ))}
+
+                    {/* '...' 표시 */}
+                    {totalPages > 5 && currentPage > 2 && currentPage < totalPages - 3 && (
+                        <span>...</span>
+                    )}
+
+
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages - 1}  // 마지막 페이지에서는 다음 버튼 비활성화
+                    >
+                        <img src={angleSmallRight} alt="다음"/>
+                    </button>
+                    <button
+                        onClick={() => handlePageChange(totalPages - 1)}
+                        disabled={currentPage === totalPages - 1}
+                    >
+                        <img src={angleDoubleSmallRight} alt="끝"/>
+                    </button>
+                </div>
+            </div>
+        </div>
   );
 };
 
