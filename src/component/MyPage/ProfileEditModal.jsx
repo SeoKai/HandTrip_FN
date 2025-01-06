@@ -12,6 +12,7 @@ const ProfileEditModal = ({
 							handleImageUpload,
 							updateUserProfile,
 							previewImage,
+							setPreviewImage, // 추가
 							cancelEdit,
                           }) => {
 
@@ -49,9 +50,20 @@ const ProfileEditModal = ({
 								<label className="profile-edit-image-label">
 									<input
 										type="file"
+										accept=".jpg,.jpeg,.png" // 허용되는 파일 형식 명시
 										onChange={(e) => {
+											const fileInput = e.target;
 											const file = e.target.files ? e.target.files[0] : null;
-											if (file) handleImageUpload(file);
+											if (file) {
+												// 유효성 검사
+												const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+												if (!validTypes.includes(file.type)) {
+												  alert("지원되지 않는 파일 형식입니다. JPG, PNG, JPEG 파일만 업로드 가능합니다.");
+												  fileInput.value = ""; // 입력 초기화
+												  return;
+												}									
+												handleImageUpload(file); // 유효한 파일만 업로드 처리
+											}
 										}}
 										className="profile-edit-input-file"
 									/>
@@ -81,7 +93,6 @@ const ProfileEditModal = ({
 						onClick={() => {
 							setProfileEditModalOpen(false); // 프로필 수정 모달 닫기
 							setChangePasswordModalOpen(true); // 비밀번호 변경 모달 열기
-							console.log("비밀번호 변경 모달 열기");
 						}}
 						className="password-change-button"
 						>
@@ -89,17 +100,24 @@ const ProfileEditModal = ({
 						</button>
 						<button 
 							className="profile-edit-cancel-button"   
-							onClick={async () => {
-								const success = await updateUserProfile();
-								if (success) {
-								  alert("프로필이 성공적으로 업데이트되었습니다.");
-								  setProfileEditModalOpen(false); // 모달 닫기
-								}
+							onClick={() => {
+								cancelEdit(); // 초기화 함수 호출
 							  }}
 						>
 							취소
 						</button>
-						<button className="profile-edit-save-button" onClick={updateUserProfile}>
+						<button className="profile-edit-save-button"       
+							onClick={async () => {
+								const success = await updateUserProfile();
+								if (success) {
+								alert("프로필이 성공적으로 업데이트되었습니다.");
+								setProfileEditModalOpen(false); // 모달 닫기
+								window.location.reload()
+								} else {
+								alert("프로필 업데이트에 실패했습니다.");
+								}
+							}}
+						>
 							저장
 						</button>
 					</div>

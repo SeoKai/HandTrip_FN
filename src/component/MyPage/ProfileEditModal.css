@@ -30,7 +30,11 @@
 }
 
 .profile-edit-form {
+	display: flex;
+	flex-direction: column; /* 수직 정렬 */
+	gap: 20px; /* 섹션 간격 */
 	padding: 15px 25px;
+	margin-right:0;
 }
 
 .profile-edit-image-container > h3,
@@ -83,6 +87,7 @@
 	flex-wrap: wrap;
 	gap: 10px;
 	padding: 10px 25px 25px 25px;
+	width:100%
 }
 
 .profile-edit-buttons .password-change-button,

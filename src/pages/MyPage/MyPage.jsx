@@ -37,6 +37,7 @@ const MyPage = () => {
       return;
     }
 
+
     // 미리보기 이미지 URL 설정
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -97,6 +98,7 @@ const MyPage = () => {
   const updateUserProfile = async () => {
     const formData = new FormData();
     formData.append("profileImage", compressedImage); // FormData에 파일 추가
+    console.log(formData)
 
     try {
       const response = await axios.post(
@@ -129,15 +131,17 @@ const MyPage = () => {
       if (updateResponse && updateResponse.data) {
         console.log("업데이트된 프로필 응답:", updateResponse.data);
         setUserProfile(updateResponse.data); // 최종적으로 업데이트된 프로필 상태 저장
-        alert("프로필이 성공적으로 업데이트되었습니다.");
         setIsEditing(false); // 수정 모드 종료
+        return true;
       }
     } catch (error) {
-      alert("프로필 업데이트에 실패했습니다.");
-      console.error(
-        "프로필 이미지 저장 또는 프로필 업데이트에 실패했습니다.",
-        error
-      );
+      if(error.response.data === "지원되지 않는 파일 형식입니다."){
+        alert(`${error.response.data}\n프로필 사진은 jpg, jpeg, png 파일만 허용됩니다.`);  
+      }else{
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
+      console.error("프로필 이미지 저장 또는 프로필 업데이트에 실패했습니다.",error);
+      return false;
     }
   };
 
@@ -155,10 +159,16 @@ const MyPage = () => {
     if (originalProfile) {
       setUserProfile(originalProfile); // 초기 데이터로 복원
     }
-    setPreviewImage(initialProfileImageUrl); // 취소 시 원래 프로필 이미지로 복원
+    setPreviewImage(initialProfileImageUrl || userProfile.profileImageUrl || ""); // 취소 시 원래 프로필 이미지로 복원
     setIsEditing(false); // 수정 모드 비활성화
     setShowPasswordChangeButton(false); // 비밀번호 변경 버튼 숨기기
   };
+
+  useEffect(() => {
+    if (isProfileEditModalOpen) {
+      setPreviewImage(initialProfileImageUrl || userProfile.profileImageUrl || ""); // 모달 열릴 때 초기화
+    }
+  }, [isProfileEditModalOpen, initialProfileImageUrl, userProfile.profileImageUrl]);
 
   const toggleOptions = (id) => {
     setActiveOptions((prev) => (prev === id ? null : id)); // 같은 ID 클릭 시 닫기
@@ -508,7 +518,6 @@ const MyPage = () => {
       <header className="mypage-header">
         <img
           src={
-            previewImage ||
             userProfile.profileImageUrl ||
             "https://via.placeholder.com/100"
           }
@@ -543,7 +552,10 @@ const MyPage = () => {
         handleImageUpload={handleImageUpload}
         updateUserProfile={updateUserProfile}
         previewImage={previewImage}
-        cancelEdit={cancelEdit}
+        cancelEdit={() => {
+          setPreviewImage(userProfile.profileImageUrl || ""); // 초기화 로직
+          setProfileEditModalOpen(false); // 모달 닫기
+        }}
       />
 
       <ChangePasswordModal

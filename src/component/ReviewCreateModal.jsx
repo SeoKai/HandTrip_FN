@@ -30,7 +30,6 @@ const ReviewCreateModal = ({
     const validImageTypes = [
       "image/jpeg",
       "image/png",
-      "image/gif",
       "image/webp",
     ];
     
