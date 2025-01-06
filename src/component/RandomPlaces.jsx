@@ -26,7 +26,7 @@ const RandomPlaces = () => {
     setLoading(true);
     console.log("랜덤 장소 데이터를 불러오는 중...");
     axios
-      .get("http://localhost:5050/api/ai/random-places")
+      .get(`${process.env.REACT_APP_BASE_URL}/api/ai/random-places`)
       .then((response) => {
         console.log("랜덤 장소 데이터 로드 성공:", response.data);
         setPlaces(response.data);
@@ -62,11 +62,15 @@ const RandomPlaces = () => {
     }));
 
     try {
-      await axios.post("http://localhost:5050/api/ai/rating", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/ai/rating`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setMessage("점수가 성공적으로 제출되었습니다!");
       setTimeout(() => {

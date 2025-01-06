@@ -69,7 +69,7 @@ const MyPage = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5050/api/userProfile/get",
+        `${process.env.REACT_APP_BASE_URL}/api/userProfile/get`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -102,11 +102,11 @@ const MyPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5050/api/userProfile/uploadProfileImage",
+        `${process.env.REACT_APP_BASE_URL}/api/userProfile/uploadProfileImage`,
         formData,
         {
           headers: {
-            "Content-Type": "multiple/form-data",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
@@ -119,7 +119,7 @@ const MyPage = () => {
 
       // 프로필 이미지 URL 업데이트된 객체로 서버에 프로필 업데이트 요청
       const updateResponse = await axios.put(
-        "http://localhost:5050/api/userProfile",
+        `${process.env.REACT_APP_BASE_URL}/api/userProfile`,
         updatedProfile,
         {
           headers: {
@@ -208,7 +208,7 @@ const MyPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5050/reviews/getReviewsWithLocation",
+        `${process.env.REACT_APP_BASE_URL}/reviews/getReviewsWithLocation`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -269,7 +269,6 @@ const MyPage = () => {
     }
   }, [activeTab]);
 
-
   /*날짜 포맷팅 함수*/
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -291,14 +290,14 @@ const MyPage = () => {
                     return;
                 }
 
-                const response = await axios.get(
-                    'http://localhost:5050/api/planner/user/plans',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`, // 토큰 포함
-                        },
-                    }
-                );
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/planner/user/plans`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // 토큰 포함
+            },
+          }
+        );
 
                 if (response.data) {
                     const updatedPlans = response.data.map((plan) => {
@@ -357,11 +356,14 @@ const MyPage = () => {
     const confirmDelete = window.confirm("정말로 이 리뷰를 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:5050/reviews/delete/${reviewId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}/reviews/delete/${reviewId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
 
         alert("리뷰가 삭제되었습니다.");
         // 삭제된 후 리뷰 목록을 다시 불러옴.
@@ -372,42 +374,24 @@ const MyPage = () => {
       }
     }
   };
+  const handleDeletePlan = async (plannerId) => {
+    if (!window.confirm("정말로 삭제하시겠습니까?")) return;
 
-    // const toggleOptions = (id) => {
-    //     setActiveOptions((prev) => (prev === id ? null : id)); // 같은 ID 클릭 시 닫기
-    // };
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        return;
+      }
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (
-    //             !event.target.closest('.options-menu') &&
-    //             !event.target.closest('.options-button')
-    //         ) {
-    //             setActiveOptions(null); // 메뉴 닫기
-    //         }
-    //     };
-    //
-    //     document.addEventListener('click', handleClickOutside);
-    //
-    //     return () => {
-    //         document.removeEventListener('click', handleClickOutside);
-    //     };
-    // }, []);
-    const handleDeletePlan = async (plannerId) => {
-        if (!window.confirm('정말로 삭제하시겠습니까?')) return;
-
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                alert('로그인이 필요합니다.');
-                return;
-            }
-
-            await axios.delete(`http://localhost:5050/api/planner/${plannerId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`, // 토큰 포함
-                },
-            });
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/api/planner/${plannerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // 토큰 포함
+          },
+        }
+      );
 
             setPlans((prevPlans) =>
                 prevPlans.filter((plan) => plan.plannerId !== plannerId)
@@ -424,24 +408,24 @@ const MyPage = () => {
     const [currentFavoritePage, setCurrentFavoritePage] = useState(0);
     const [totalFavoritePages, setTotalFavoritePages] = useState(0);
 
-    // 찜한 여행지 정보 가져오기
-    const fetchFavoriteLocation = async (pageNumber = 0) => {
-        setLoading(true);
-        try {
-            const response = await axios.get(
-                "http://localhost:5050/api/locationFavorite/userFavorites",
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                    },
-                    params: {
-                        page: pageNumber,
-                        pageSize: 8,
-                        sortValue: "createdAt",
-                        sortDirection: "ASC",
-                    },
-                }
-            );
+  // 찜한 여행지 정보 가져오기
+  const fetchFavoriteLocation = async (pageNumber = 0) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/userFavorites`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          params: {
+            page: pageNumber,
+            pageSize: 8,
+            sortValue: "createdAt",
+            sortDirection: "ASC",
+          },
+        }
+      );
 
             // 데이터에 isFavorite 필드 추가
             const updatedLocations = response.data.content.map((location) => ({
@@ -465,34 +449,34 @@ const MyPage = () => {
             (loc) => loc.locationId === locationId
         );
 
-        try {
-            if (targetLocation.isFavorite) {
-                // 찜 취소 요청
-                await axios.delete(
-                    "http://localhost:5050/api/locationFavorite/delete",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                        },
-                        data: { locationId },
-                    }
-                );
-                alert("찜이 취소되었습니다.");
-            } else {
-                // 찜 추가 요청
-                await axios.post(
-                    "http://localhost:5050/api/locationFavorite/add",
-                    {
-                        locationId,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                        },
-                    }
-                );
-                alert("찜이 추가되었습니다.");
-            }
+    try {
+      if (targetLocation.isFavorite) {
+        // 찜 취소 요청
+        await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/delete`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            data: { locationId },
+          }
+        );
+        alert("찜이 취소되었습니다.");
+      } else {
+        // 찜 추가 요청
+        await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/add`,
+          {
+            locationId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        alert("찜이 추가되었습니다.");
+      }
 
             // 클라이언트 상태 업데이트
             setFavoriteLocations((prev) =>

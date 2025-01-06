@@ -98,36 +98,36 @@ const ReviewCreateModal = ({
     const uploadPromises = imageFiles.map((file) => {
       const formData = new FormData();
       formData.append("files", file);
-      return axios.post("http://localhost:5050/reviews/uploadReviewImage", formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "multipart/form-data",
-        },
+      return axios.post(`${process.env.REACT_APP_BASE_URL}/reviews/uploadReviewImage`, formData, {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              "Content-Type": "multipart/form-data",
+          },
       });
     });
 
-    try {
-      const responses = await Promise.all(uploadPromises); // 병렬로 업로드 실행
-      return responses.map((res) => res.data); // 업로드된 이미지 URL 반환
-    } catch (error) {
-      console.error("이미지 업로드 중 오류 발생:", error);
-      alert("이미지 업로드에 실패했습니다.");
-      throw new Error("이미지 업로드 실패");
-    }
+      try {
+          const responses = await Promise.all(uploadPromises); // 병렬로 업로드 실행
+          return responses.map((res) => res.data); // 업로드된 이미지 URL 반환
+      } catch (error) {
+          console.error("이미지 업로드 중 오류 발생:", error);
+          alert("이미지 업로드에 실패했습니다.");
+          throw new Error("이미지 업로드 실패");
+      }
   };
-  
-  // 리뷰 작성 함수
-  const createReview = async (reviewDto) => {
-    try {
-      await axios.post("http://localhost:5050/reviews/create", reviewDto, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      alert("리뷰가 작성되었습니다!");
-      return "success";
-    } catch (error) {
+
+    // 리뷰 작성 함수
+    const createReview = async (reviewDto) => {
+        try {
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/reviews/create`, reviewDto, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            alert("리뷰가 작성되었습니다!");
+            return "success";
+        } catch (error) {
       console.error("리뷰 작성 중 오류 발생:", error);
       alert("리뷰 작성에 실패했습니다.");
       throw new Error("리뷰 작성 실패");
@@ -137,7 +137,7 @@ const ReviewCreateModal = ({
   // 리뷰 수정 함수
   const editReview = async (reviewId, reviewDto) => {
     try {
-      await axios.put(`http://localhost:5050/reviews/${reviewId}/edit`, reviewDto, {
+      await axios.put(`${process.env.REACT_APP_BASE_URL}/reviews/${reviewId}/edit`, reviewDto, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Content-Type": "application/json",

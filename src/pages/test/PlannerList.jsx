@@ -25,7 +25,7 @@ const PlannerList = () => {
         }
 
         const response = await axios.get(
-          "http://localhost:5050/api/planner/user/plans",
+          `${process.env.REACT_APP_BASE_URL}/api/planner/user/plans`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -108,7 +108,9 @@ const PlannerList = () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(`http://localhost:5050/api/planner/${plannerId}`);
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/api/planner/${plannerId}`
+      );
 
       setPlanners((prev) =>
         prev.filter((planner) => planner.plannerId !== plannerId)

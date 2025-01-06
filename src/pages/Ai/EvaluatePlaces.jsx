@@ -12,7 +12,7 @@ const EvaluatePlaces = ({ userId, onSkip }) => {
   // 랜덤 여행지 가져오기
   useEffect(() => {
     axios
-      .get("http://localhost:5050/api/ai/random-places")
+      .get(`${process.env.REACT_APP_BASE_URL}/api/ai/random-places`)
       .then((response) => {
         if (response.data.places && response.data.places.length > 0) {
           setPlaces(response.data.places);
@@ -43,7 +43,7 @@ const EvaluatePlaces = ({ userId, onSkip }) => {
 
     setIsSubmitting(true);
     axios
-      .post("http://localhost:5050/api/ai/save-ratings", payload)
+      .post(`${process.env.REACT_APP_BASE_URL}/api/ai/save-ratings`, payload)
       .then(() => {
         alert("평점이 저장되었습니다!");
         navigate("/"); // 메인 페이지로 이동

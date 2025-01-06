@@ -64,7 +64,7 @@ function Home() {
     const headers = token ? { Authorization: `Bearer ${token}` } : {}; // 비로그인 상태에서는 헤더 없이 요청
 
     axios
-      .post("http://localhost:5050/api/ai/verify", {}, { headers })
+      .post(`${process.env.REACT_APP_BASE_URL}/api/ai/verify`, {}, { headers })
       .then((response) => {
         console.log("Recommendations", response.data);
         setRecommendations(response.data);

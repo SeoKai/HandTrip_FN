@@ -58,7 +58,7 @@ const AttractionDetail = () => {
     const fetchLocationDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/api/locations/${locationId}`
+          `${process.env.REACT_APP_BASE_URL}/api/locations/${locationId}`
         );
         setLocation(response.data); // 받아온 장소 상세 정보를 상태에 저장
         setLatitude(response.data.latitude); // 위도 설정
@@ -79,7 +79,7 @@ const AttractionDetail = () => {
       const fetchNearbyLocations = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5050/api/locations/getNearby`,
+            `${process.env.REACT_APP_BASE_URL}/api/locations/getNearby`,
             {
               params: {
                 latitude,
@@ -128,7 +128,7 @@ const AttractionDetail = () => {
     try {
       const accessToken = localStorage.getItem("accessToken"); // 액세스 토큰 가져오기
       const response = await axios.get(
-        "http://localhost:5050/reviews/getReviewsWithUser",
+        `${process.env.REACT_APP_BASE_URL}/reviews/getReviewsWithUser`,
         {
           // headers: { Authorization: `Bearer ${accessToken}` },
           params: {
@@ -370,9 +370,9 @@ const AttractionDetail = () => {
 
                 {isModalOpen && (
                     <div className="modal-backdrop">
-                        <ReviewCreateModal 
-                            locationId={locationId} 
-                            onClose={closeModal} 
+                        <ReviewCreateModal
+                            locationId={locationId}
+                            onClose={closeModal}
                             onSuccess={handleReviewSuccess} // onSuccess 전달
                         />
                     </div>

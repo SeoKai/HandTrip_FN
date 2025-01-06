@@ -91,7 +91,7 @@ function SignIn() {
 
   // OAuth 로그인 핸들러
   const handleOAuthLogin = (provider) => {
-    window.location.href = `http://localhost:5050/oauth2/authorization/${provider}`;
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/${provider}`;
   };
 
   return (

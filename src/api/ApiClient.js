@@ -3,7 +3,7 @@ import { refreshToken } from "./AuthService";
 import { handleSessionExpired } from "./AuthService"; // 통합된 세션 만료 처리 함수 가져오기
 
 const ApiClient = axios.create({
-  baseURL: "http://localhost:5050/api/auth", // 백엔드 기본 URL
+  baseURL: `${process.env.REACT_APP_BASE_URL}/api/auth`, // 백엔드 기본 URL
   headers: {
     "Content-Type": "application/json",
   },

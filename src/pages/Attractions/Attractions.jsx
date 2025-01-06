@@ -42,7 +42,7 @@ const Attractions = () => {
     const fetchRegions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5050/region/getAll"
+          `${process.env.REACT_APP_BASE_URL}/region/getAll`
         ); // 지역 정보 API 호출
 
         setRegions(response.data); // 가져온 지역 목록 데이터 저장
@@ -63,7 +63,7 @@ const Attractions = () => {
     const fetchTags = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5050/tag/getAll"
+          `${process.env.REACT_APP_BASE_URL}/tag/getAll`
         ); // 모든 태그를 다 가져오는 API 경로
 
         setTags(response.data); // 가져온 데이터를 상태에 저장
@@ -149,7 +149,7 @@ const Attractions = () => {
       }
 
       const response = await axios.get(
-        "http://localhost:5050/api/locations/searchLocation",
+        `${process.env.REACT_APP_BASE_URL}/api/locations/searchLocation`,
         {
           //
           params: {
@@ -297,7 +297,7 @@ const Attractions = () => {
   const getUserFavoriteLocations = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5050/api/locationFavorite/userFavorites",
+        `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/userFavorites`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -323,7 +323,7 @@ const Attractions = () => {
   const addFavorite = async (locationId) => {
     try {
       const response = await axios.post(
-        "http://localhost:5050/api/locationFavorite/add",
+        `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/add`,
         { locationId },
         {
           headers: {
@@ -340,7 +340,7 @@ const Attractions = () => {
   const deleteFavorite = async (locationId) => {
     try {
       const response = await axios.delete(
-        "http://localhost:5050/api/locationFavorite/delete",
+        `${process.env.REACT_APP_BASE_URL}/api/locationFavorite/delete`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // token 사용

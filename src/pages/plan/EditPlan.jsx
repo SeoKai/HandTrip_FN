@@ -72,7 +72,7 @@ function EditPlan() {
         }
 
         const response = await axios.get(
-          `http://localhost:5050/api/planner/${id}`, // API 엔드포인트
+          `${process.env.REACT_APP_BASE_URL}/api/planner/${id}`, // API 엔드포인트
           {
             headers: {
               Authorization: `Bearer ${token}`, // Authorization 헤더 추가
@@ -261,7 +261,7 @@ function EditPlan() {
       JSON.stringify(UpdatePlanner, null, 2)
     );
 
-    const url = "http://localhost:5050/api/planner/update";
+    const url = `${process.env.REACT_APP_BASE_URL}/api/planner/update`;
 
     try {
       const token = localStorage.getItem("accessToken"); // 로컬 스토리지에서 JWT 토큰 가져오기
