@@ -121,15 +121,15 @@
     margin-top: 0px;
 }
 
-.profile-edit-buttons {
-    display: flex; 
-    justify-content: flex-end; /* 오른쪽 정렬 */
-    align-items: flex-end;
-    gap: 10px; /* 버튼 간격 */
-    width: 50%; /* 부모 요소의 전체 너비 사용 */
-    margin-top: 35px;
-    
-}
+/*.profile-edit-buttons {*/
+/*    display: flex; */
+/*    justify-content: flex-end; !* 오른쪽 정렬 *!*/
+/*    align-items: flex-end;*/
+/*    gap: 10px; !* 버튼 간격 *!*/
+/*    width: 50%; !* 부모 요소의 전체 너비 사용 *!*/
+/*    margin-top: 35px;*/
+/*    */
+/*}*/
 
 .save-button,
 .cancel-button {

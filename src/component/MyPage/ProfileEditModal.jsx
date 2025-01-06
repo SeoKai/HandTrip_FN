@@ -1,20 +1,23 @@
 import React, {useState} from "react";
 import Compressor from "compressorjs";
 import './ProfileEditModal.css';
+import AccountDeleteModal from "./AccountDeleteModal"; // 회원탈퇴 모달 컴포넌트 임포트
 
 const ProfileEditModal = ({
-							isOpen,
-							setProfileEditModalOpen,
-							setChangePasswordModalOpen, // 추가된 Props
-							onClose,
-							userProfile,
-							setUserProfile,
-							handleImageUpload,
-							updateUserProfile,
-							previewImage,
-							setPreviewImage, // 추가
-							cancelEdit,
-                          }) => {
+							  isOpen,
+							  setProfileEditModalOpen,
+							  setChangePasswordModalOpen, // 추가된 Props
+							  onClose,
+							  userProfile,
+							  setUserProfile,
+							  handleImageUpload,
+							  updateUserProfile,
+							  previewImage,
+							  setPreviewImage, // 추가
+							  cancelEdit,
+						  }) => {
+
+	const [isAccountDeleteModalOpen, setAccountDeleteModalOpen] = useState(false); // 회원탈퇴 모달 상태 추가
 
 	if (!isOpen) return null;
 
@@ -24,11 +27,11 @@ const ProfileEditModal = ({
 				<div className="profile-edit-modal-content">
 					<div className="profile-edit-header">
 						<h2>프로필 수정</h2>
-						<button className="modal-close-button"   
-						onClick={() => {
-							setProfileEditModalOpen(false); // 모달 닫기
-							if (onClose) onClose(); // 추가적으로 필요한 동작 실행
-						}}>
+						<button className="modal-close-button"
+								onClick={() => {
+									setProfileEditModalOpen(false); // 모달 닫기
+									if (onClose) onClose(); // 추가적으로 필요한 동작 실행
+								}}>
 							X
 						</button>
 					</div>
@@ -58,10 +61,10 @@ const ProfileEditModal = ({
 												// 유효성 검사
 												const validTypes = ["image/jpeg", "image/png", "image/jpg"];
 												if (!validTypes.includes(file.type)) {
-												  alert("지원되지 않는 파일 형식입니다. JPG, PNG, JPEG 파일만 업로드 가능합니다.");
-												  fileInput.value = ""; // 입력 초기화
-												  return;
-												}									
+													alert("지원되지 않는 파일 형식입니다. JPG, PNG, JPEG 파일만 업로드 가능합니다.");
+													fileInput.value = ""; // 입력 초기화
+													return;
+												}
 												handleImageUpload(file); // 유효한 파일만 업로드 처리
 											}
 										}}
@@ -89,40 +92,59 @@ const ProfileEditModal = ({
 						</div>
 					</div>
 					<div className="profile-edit-buttons">
+						<div className="information-button">
 						<button
-						onClick={() => {
-							setProfileEditModalOpen(false); // 프로필 수정 모달 닫기
-							setChangePasswordModalOpen(true); // 비밀번호 변경 모달 열기
-						}}
-						className="password-change-button"
+							className="account-delete-button"
+
+							onClick={() =>
+								setAccountDeleteModalOpen(true)}// 회원탈퇴 모달 열기
 						>
-						비밀번호 변경
+							회원탈퇴
 						</button>
-						<button 
-							className="profile-edit-cancel-button"   
+						<span className="compartment">|</span>
+						<button
+							onClick={() => {
+								setProfileEditModalOpen(false); // 프로필 수정 모달 닫기
+								setChangePasswordModalOpen(true); // 비밀번호 변경 모달 열기
+							}}
+							className="password-change-button"
+						>
+							비밀번호 변경
+						</button>
+						</div>
+
+						<div className="protile-adit-button">
+						<button
+							className="profile-edit-cancel-button"
 							onClick={() => {
 								cancelEdit(); // 초기화 함수 호출
-							  }}
+							}}
 						>
 							취소
 						</button>
-						<button className="profile-edit-save-button"       
-							onClick={async () => {
-								const success = await updateUserProfile();
-								if (success) {
-								alert("프로필이 성공적으로 업데이트되었습니다.");
-								setProfileEditModalOpen(false); // 모달 닫기
-								window.location.reload()
-								} else {
-								alert("프로필 업데이트에 실패했습니다.");
-								}
-							}}
+						<button className="profile-edit-save-button"
+								onClick={async () => {
+									const success = await updateUserProfile();
+									if (success) {
+										alert("프로필이 성공적으로 업데이트되었습니다.");
+										setProfileEditModalOpen(false); // 모달 닫기
+										window.location.reload()
+									} else {
+										alert("프로필 업데이트에 실패했습니다.");
+									}
+								}}
 						>
 							저장
 						</button>
+						</div>
 					</div>
 				</div>
 			</div>
+			{/* 회원탈퇴 모달 */}
+			<AccountDeleteModal
+				isOpen={isAccountDeleteModalOpen}
+				onClose={() => setAccountDeleteModalOpen(false)}
+			/>
 		</div>
 	);
 };
