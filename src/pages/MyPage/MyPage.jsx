@@ -97,14 +97,15 @@ const MyPage = () => {
   const updateUserProfile = async () => {
     const formData = new FormData();
     formData.append("profileImage", compressedImage); // FormData에 파일 추가
-
+      console.log("FormData 내용:", formData.get("profileImage")); // FormData 확인
+    console.log(formData);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/userProfile/uploadProfileImage`,
         formData,
         {
           headers: {
-            "Content-Type": "multiple/form-data",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }

@@ -15,10 +15,19 @@
     margin: 80px 0 25px 0;
 }
 
+/*.profile-img {*/
+/*    width: 153px;*/
+/*    height: 153px;*/
+/*    border-radius: 50%;*/
+/*    margin-right: 40px;*/
+/*}*/
+
 .profile-img {
-    width: 153px;
-    height: 153px;
-    border-radius: 50%;
+    width: 100%; /* 컨테이너 너비에 맞게 설정 */
+    max-width: 153px; /* 최대 너비를 제한 */
+    aspect-ratio: 1 / 1; /* 1:1 비율 유지 */
+    border-radius: 50%; /* 원형 유지 */
+    object-fit: cover; /* 비율을 유지하며 컨테이너에 맞춤 */
     margin-right: 40px;
 }
 
