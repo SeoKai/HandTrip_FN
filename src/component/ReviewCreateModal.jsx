@@ -22,10 +22,10 @@ const ReviewCreateModal = ({
     initialData.imageUrls || []
   );
   const [imageFiles, setImageFiles] = useState([]); // 이미지 파일 상태 추가
+  const [isLoading, setIsLoading] = useState(false);
 
   // 이미지 파일 선택 처리
   const handleImageChange = async (e) => {
-    // async 추가
     const files = Array.from(e.target.files);
     const validImageTypes = [
       "image/jpeg",
@@ -33,7 +33,8 @@ const ReviewCreateModal = ({
       "image/gif",
       "image/webp",
     ];
-
+    
+    // 허용하지 않는 파일 필터링
     const filteredFiles = files.filter((file) => {
       if (!validImageTypes.includes(file.type)) {
         alert(`${file.name}은(는) 허용되지 않는 파일 형식입니다.`);
@@ -42,6 +43,7 @@ const ReviewCreateModal = ({
       return true;
     });
 
+    // 첨부 이미지 갯수 제한
     if (filteredFiles.length + imageUrls.length > 3) {
       alert("최대 3개의 이미지만 첨부할 수 있습니다.");
       return;
@@ -54,14 +56,13 @@ const ReviewCreateModal = ({
     for (const file of filteredFiles) {
       try {
         const options = {
-          maxSizeMB: 5, // 압축된 이미지의 최대 크기 (5MB 이하로 설정)
+          maxSizeMB: 2, // 압축된 이미지의 최대 크기 (5MB 이하로 설정)
           maxWidthOrHeight: 1024, // 이미지의 최대 가로 또는 세로 크기
           useWebWorker: true, // 웹 워커를 사용하여 비동기적으로 처리
         };
 
         // 이미지 압축
         const compressedBlob = await imageCompression(file, options);
-        console.log(compressedBlob);
 
         // Blob을 File 객체로 변환하면서 원래 이름 복원
         const compressedFile = new File([compressedBlob], file.name, {
@@ -77,60 +78,93 @@ const ReviewCreateModal = ({
       }
     }
 
+    // 이미지 미리보기 URL 생성
+    const newPreviewUrls = filteredFiles.map((file) => URL.createObjectURL(file));
+    setPrevImageUrls((prevUrls) => [...prevUrls, ...newPreviewUrls]);
     setImageFiles((prevFiles) => [...prevFiles, ...compressedFiles]);
 
-    const newPreviewUrls = filteredFiles.map((file) =>
-      URL.createObjectURL(file)
-    );
-    setPrevImageUrls((prevUrls) => [...prevUrls, ...newPreviewUrls]);
   };
 
-  useEffect(() => {
-    console.log("Updated imageFiles:", imageFiles);
-    console.log("Updated imageUrls:", imageUrls);
-    console.log("Updated prevImageUrls:", prevImageUrls);
-    console.log("Updated comment:", comment);
-  }, [imageFiles, imageUrls, comment]);
+  // useEffect(() => {
+  //   console.log('Updated imageFiles:', imageFiles);
+  //   console.log('Updated imageUrls:',imageUrls)
+  //   console.log('Updated prevImageUrls:',prevImageUrls)
+  //   console.log('Updated comment:',comment)
+  // }, [imageFiles,imageUrls,comment]);
 
-  const handleSubmit = async () => {
-    const accessToken = localStorage.getItem("accessToken");
+  // 이미지 업로드 함수
+  const uploadImages = async (imageFiles) => {
+    if (imageFiles.length === 0) return [];
 
-    console.log("handleSubmit 호출 시 imageFiles 상태 :", imageFiles);
-    console.log("handleSubmit 호출 시 comment 상태 : ", comment);
-
-    // 이미지 업로드가 필요할 때만 실행
-    const formData = new FormData();
-
-    imageFiles.forEach((file) => {
+    const uploadPromises = imageFiles.map((file) => {
+      const formData = new FormData();
       formData.append("files", file);
+      return axios.post(`${process.env.REACT_APP_BASE_URL}/reviews/uploadReviewImage`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
     });
 
+    try {
+      const responses = await Promise.all(uploadPromises); // 병렬로 업로드 실행
+      return responses.map((res) => res.data); // 업로드된 이미지 URL 반환
+    } catch (error) {
+      console.error("이미지 업로드 중 오류 발생:", error);
+      alert("이미지 업로드에 실패했습니다.");
+      throw new Error("이미지 업로드 실패");
+    }
+  };
+  
+  // 리뷰 작성 함수
+  const createReview = async (reviewDto) => {
+    try {
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/reviews/create`, reviewDto, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      alert("리뷰가 작성되었습니다!");
+      return "success";
+    } catch (error) {
+      console.error("리뷰 작성 중 오류 발생:", error);
+      alert("리뷰 작성에 실패했습니다.");
+      throw new Error("리뷰 작성 실패");
+    }
+  };
+
+  // 리뷰 수정 함수
+  const editReview = async (reviewId, reviewDto) => {
+    try {
+      await axios.put(`${process.env.REACT_APP_BASE_URL}/reviews/${reviewId}/edit`, reviewDto, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      alert("리뷰가 수정되었습니다!");
+      return "success";
+    } catch (error) {
+      console.error("리뷰 수정 중 오류 발생:", error);
+      alert("리뷰 수정에 실패했습니다.");
+      throw new Error("리뷰 수정 실패");
+    }
+  };
+
+
+  // 폼 제출 처리
+  const handleSubmit = async () => {
+    setIsLoading(true); // 로딩 시작
+
     let newImageUrls = [];
-
-    // 이미지 업로드 요청
-    if (imageFiles.length > 0) {
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/reviews/uploadReviewImage`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        newImageUrls = response.data; // 업로드 후 서버에서 반환된 URL들
-        console.log("새로운 이미지 업로드 제대로 되는가 확인", newImageUrls);
-      } catch (error) {
-        console.error(
-          "이미지 업로드 중 오류 발생:",
-          error?.response || error.message || error
-        );
-        alert("이미지 업로드에 실패했습니다.");
-        return;
-      }
+    try {
+      console.log("최종 imageFiles 상태:", imageFiles); // 디버깅용
+      newImageUrls = await uploadImages(imageFiles); // 이미지 업로드
+    } catch (error) {
+      setIsLoading(false);
+      return; // 이미지 업로드 실패 시 진행 중단
     }
 
     const reviewDto = {
@@ -139,64 +173,35 @@ const ReviewCreateModal = ({
       title: title,
       rating: rating,
       comment: comment,
-      imageUrls: [...imageUrls, ...newImageUrls],
+      imageUrls: [...imageUrls.flat(), ...newImageUrls.flat()],
     };
 
     try {
-      // 반환상태를 부모 컴포넌트로 전달할거임
-      let responseStatus = "fail"; // 기본적으로 실패 상태로 설정
-
       if (currentMode === "create") {
-        await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/reviews/create`,
-          reviewDto,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, // accessToken
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        alert("리뷰가 작성되었습니다!");
-        responseStatus = "success"; // 성공 시 상태 변경
-      } else if (currentMode === "edit") {
-        await axios.put(
-          `${process.env.REACT_APP_BASE_URL}/reviews/${initialData.reviewId}/edit`,
-          reviewDto,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, // accessToken
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        alert("리뷰가 수정되었습니다!");
-        responseStatus = "success"; // 성공 시 상태 변경
+        await createReview(reviewDto);
+      } else {
+        await editReview(reviewId, reviewDto);
       }
-
-      // 부모로 상태 전달
-      onSuccess(responseStatus);
-      // onClose(); // 모달 닫기
+      onSuccess("success");
+      onClose();
     } catch (error) {
-      console.error(
-        "리뷰 작성 중 오류 발생:",
-        error?.response || error.message || error
-      );
-      alert("리뷰 처리에 실패했습니다.");
+      console.error("리뷰 처리 중 오류 발생:", error);
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
   };
 
-  // 기존 이미지 삭제
+  // 이미지 삭제 처리
   const removeImageUrl = (index) => {
-    setPrevImageUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
+    setPrevImageUrls((prevUrls) => {
+      const updatedUrls = prevUrls.filter((_, i) => i !== index);
+      setImageUrls(updatedUrls); // 삭제된 상태 반영
+      return updatedUrls;
+    });
     setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    setImageUrls((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
-  // 새 이미지 삭제
-  const removeImageFile = (index) => {};
+
 
   return (
     <div className="reviewCreateModal">
