@@ -45,14 +45,25 @@ const MyPage = () => {
     };
     reader.readAsDataURL(file);
 
-    new Compressor(file, {
-      quality: 0.6,
-      maxWidth: 800,
-      maxHeight: 800,
-      success: (compressedFile) => {
-        // 파일을 상태에 저장
-        setCompressedImage(compressedFile);
-      },
+      new Compressor(file, {
+          quality: 0.6,
+          maxWidth: 800,
+          maxHeight: 800,
+          success: (compressedBlob) => {
+              console.log("압축된 Blob:", compressedBlob);
+
+              // Blob을 File 객체로 변환하며 파일 이름 유지
+              const compressedFile = new File([compressedBlob], file.name, {
+                  type: compressedBlob.type,
+                  lastModified: Date.now(),
+              });
+
+              console.log("압축된 File 객체:", compressedFile);
+
+              // 변환된 File 객체를 상태에 저장
+              setCompressedImage(compressedFile);
+          },
+
       error: (err) => {
         console.error("이미지 압축 실패: ", err);
       },
@@ -98,7 +109,7 @@ const MyPage = () => {
   const updateUserProfile = async () => {
     const formData = new FormData();
     formData.append("profileImage", compressedImage); // FormData에 파일 추가
-    console.log(formData)
+    console.log(compressedImage)
 
     try {
       const response = await axios.post(
