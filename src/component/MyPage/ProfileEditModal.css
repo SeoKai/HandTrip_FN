@@ -76,13 +76,14 @@
 	border-radius: 8px;
 }
 
+
 .profile-edit-header > .modal-close-button {
 	font-size: 17px;
 	background: none;
 	border: none;
 }
 
-.profile-edit-buttons {
+.profile-edit-buttons .protile-adit-button{
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
@@ -90,18 +91,43 @@
 	width:100%
 }
 
-.profile-edit-buttons .password-change-button,
-.profile-edit-buttons .profile-edit-save-button,
-.profile-edit-buttons .profile-edit-cancel-button {
+.profile-edit-buttons .protile-adit-button .profile-edit-save-button,
+.profile-edit-buttons .protile-adit-button .profile-edit-cancel-button {
 	height: 48px;
 	background: #eee;
 	border: none;
 	border-radius: 8px;
 }
 
-.profile-edit-buttons .password-change-button {
+.profile-edit-buttons .information-button {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	justify-content: center;
+	margin: 0 0 15px 25px;
+	color: #222;
+}
+
+.profile-edit-buttons .information-button .password-change-button:hover,
+.profile-edit-buttons .information-button .account-delete-button:hover {
+	border-bottom: 1px solid #222;
+}
+
+.profile-edit-buttons .information-button .password-change-button,
+.profile-edit-buttons .information-button .account-delete-button
+{
+	display: flex; /* 내부 텍스트 중앙 정렬 */
+	justify-content: center;
+	align-items: center;
+	background: none;
 	border: none;
-	width: 100%;
+	text-align: center;
+	font-size: 12px;
+}
+
+.profile-edit-buttons .compartment {
+	width: 2px;
+	font-size: 14px;
 }
 
 .profile-edit-buttons .profile-edit-save-button,
@@ -109,7 +135,7 @@
 	width: calc((100% - 10px)/2);
 }
 
-.profile-edit-buttons .profile-edit-save-button {
+.profile-edit-buttons .protile-adit-button .profile-edit-save-button {
 	background: #222;
 	color: #fff;
 }

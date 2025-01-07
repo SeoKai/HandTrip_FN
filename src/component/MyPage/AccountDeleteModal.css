@@ -1,0 +1,115 @@
+.account-delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.account-delete-modal-content {
+    background: #fff;
+    width: 450px;
+    max-width: 90%;
+    height: 540px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.account-delete-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom:10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+/* 그룹 전체 스타일링 */
+.account-delete-modal-input-group {
+    display: flex;
+    flex-direction: column; /* 라벨과 입력창/버튼을 세로로 배치 */
+    gap: 10px; /* 라벨과 입력창/버튼 간의 간격 */
+    margin: 10px 0; /* 전체 여백 */
+}
+
+/* 안내사항 */
+.lssues {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.lssues-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* 라벨 스타일 */
+.account-delete-modal-input-group label {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* 입력창과 버튼을 가로로 배치 */
+.account-delete-modal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 입력창 스타일 */
+.account-delete-modal-input-row .modal-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* 버튼 스타일 */
+.account-delete-modal-input-row .account-delete-email-verification-button,
+.account-delete-verification-check-button {
+    flex-shrink: 0; /* 버튼 크기 고정 */
+    padding: 10px 15px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.account-delete-modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.account-delete-confirm-button {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.account-delete-cancel-button {
+    background: #eee;
+    color: #222;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.account-delete-cancel-button, .account-delete-confirm-button {
+    width: calc((100% - 10px)/2);
+}
