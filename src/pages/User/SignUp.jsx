@@ -275,7 +275,7 @@ const SignUp = () => {
                         !isEmailValid || verificationRequested || isRequesting
                       }
                     >
-                      {!isFirstRequest ? "재발송" : "인증번호 요청"}
+                      {!isFirstRequest ? "재발송" : "인증 요청"}
                     </button>
                   )}
                 </div>
@@ -316,7 +316,7 @@ const SignUp = () => {
                       onClick={handleVerifyCode}
                       disabled={isEmailVerified}
                     >
-                      인증 확인
+                      확인
                     </button>
                   </>
                 )}
