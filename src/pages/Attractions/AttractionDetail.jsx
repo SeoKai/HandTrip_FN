@@ -228,363 +228,282 @@ const AttractionDetail = () => {
 
   return (
     <div className="AttractionDetail">
-      <div className="title-container">
-        {/* 장소 상세 정보 표시 */}
-        <img
-          src={arrowSmallLeft}
-          alt="뒤로가기"
-          className="back"
-          onClick={handleBackClick} // 클릭 이벤트 추가
-        />
-        <div className="title">
-          <h2>{location.locationName}</h2>
-          <h3>{location.regionName}</h3>
-        </div>
-      </div>
-      <div className="overview-container">
-        <div className="inner-wrap">
-          <img src={location.placeImgUrl} alt={location.locationName} />
-          <div className="overview-info">
-            <h2>{location.locationName}</h2>
-            <p>{"#" + location.tags.join(" #")}</p>
-            <div className="overview-info-item">
-              <h4>소개</h4>
-              <p>{location.description}</p>
-            </div>
-            <div className="overview-info-item">
-              <h4>별점 및 리뷰</h4>
-              <p>
+            <div className="title-container">
+                {/* 장소 상세 정보 표시 */}
                 <img
-                  src={starColor}
-                  alt="별 아이콘"
-                  className="star-icon"
-                  style={{ width: "14px" }}
+                    src={arrowSmallLeft}
+                    alt="뒤로가기"
+                    className="back"
+                    onClick={handleBackClick} // 클릭 이벤트 추가
                 />
-                <span>{location.googleRating}</span>
-                <span>({location.userRatingsTotal} 건의 리뷰)</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="content-container">
-        <h4>정보</h4>
-        {/* 지도 로딩 여부 확인 */}
-        {isLoaded ? (
-          <GoogleMap
-            className="map"
-            center={{ lat: latitude, lng: longitude }} // 지도 중심을 메인 장소로 설정
-            zoom={15} // 지도 확대 비율
-            mapContainerStyle={{ width: "100%", height: "400px" }} // 지도 스타일
-            options={{
-              disableDefaultUI: true, // 기본 UI 요소 숨기기 (지도 컨트롤, 확대/축소 등)
-              scrollwheel: false, // 마우스 휠로 지도 이동 방지
-              draggable: false, // 지도 드래그 이동 방지
-              gestureHandling: "none", // 제스처로 지도 이동 방지
-              // disableDefaultUI: true,  // 기본 UI 요소 비활성화
-              clickableIcons: false, // 기본 아이콘 클릭 방지
-            }}
-          >
-            {/* 고정된 마커 추가 */}
-            <Marker
-              position={{ lat: latitude, lng: longitude }}
-              draggable={false} // 마커 이동 비활성화
-            />
-          </GoogleMap>
-        ) : (
-          <div>Loading map...</div>
-        )}
-        <div className="info">
-          <div className="info-item">
-            <h4>전화번호</h4>
-            <span>{location.phoneNumber}</span>
-          </div>
-          <div className="info-item">
-            <h4>운영 시간</h4>
-            <span>{location.openingHours}</span>
-          </div>
-          <div className="info-item">
-            <h4>주소</h4>
-            <span>{location.formattedAddress}</span>
-          </div>
-          <div className="info-item">
-            <h4>웹사이트 주소</h4>
-            <a
-              href={location.website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {location.website}
-            </a>
-          </div>
-        </div>
-
-        {/* 주변장소 컨테이너 */}
-        <div className="nearby-locations-container">
-          {/* 태그가 포함되지 않은 근처 장소 */}
-          <h4>주위의 여행지</h4>
-          {nearbyLocationsExcludeTag?.length > 0 ? (
-            <ul className="nearby-locations-list">
-              {nearbyLocationsExcludeTag.slice(0, 4).map((nearbyLocation) => (
-                <li
-                  key={nearbyLocation.locationId}
-                  className="nearby-location-item"
-                >
-                  {/*<Link to={`/attractionDetail/${nearbyLocation.locationId}`} className="nearby-link">*/}
-                  <a
-                    href={`/attractionDetail/${nearbyLocation.locationId}`}
-                    rel="noopener noreferrer"
-                    className="nearby-link"
-                  >
-                    <img
-                      src={nearbyLocation.placeImgUrl}
-                      alt={nearbyLocation.locationName}
-                    />
-                    <h4>{nearbyLocation.locationName}</h4>
-                    <p>{nearbyLocation.regionName}</p>
-                    <p>
-                      <img
-                        src={starColor}
-                        alt="별 아이콘"
-                        className="star-icon"
-                      />
-                      <span>{nearbyLocation.googleRating}</span>(
-                      {nearbyLocation.userRatingsTotal})
-                    </p>
-                    <p>거리 {nearbyLocation.distanceInMeters} m</p>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="no-nearby-locations-message">
-              주위에 여행지가 없습니다.
-            </p>
-          )}
-
-          {/* 태그가 포함된 근처 장소 */}
-          <h4>주위의 음식점</h4>
-          {nearbyLocationsIncludeTag?.length > 0 ? (
-            <ul className="nearby-locations-list">
-              {nearbyLocationsIncludeTag.slice(0, 4).map((nearbyLocation) => (
-                <li
-                  key={nearbyLocation.locationId}
-                  className="nearby-location-item"
-                >
-                  <Link
-                    to={`/attractionDetail/${nearbyLocation.locationId}`}
-                    className="nearby-link"
-                  >
-                    <img
-                      src={nearbyLocation.placeImgUrl}
-                      alt={nearbyLocation.locationName}
-                    />
-                    <h4>{nearbyLocation.locationName}</h4>
-                    <p>{nearbyLocation.regionName}</p>
-                    <p>
-                      <img
-                        src={starColor}
-                        alt="별 아이콘"
-                        className="star-icon"
-                      />
-                      <span>{nearbyLocation.googleRating}</span>(
-                      {nearbyLocation.userRatingsTotal})
-                    </p>
-                    <p>거리 {nearbyLocation.distanceInMeters} m</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="no-nearby-locations-message">
-              주위에 음식점이 없습니다.
-            </p>
-          )}
-        </div>
-
-        {isModalOpen && (
-          <div className="modal-backdrop">
-            <ReviewCreateModal
-              locationId={locationId}
-              onClose={closeModal}
-              onSuccess={handleReviewSuccess} // onSuccess 전달
-            />
-          </div>
-        )}
-
-        {/* 리뷰 영역 */}
-        <div className="review-container">
-          <div className="review-section">
-            {/* 상단 헤더 영역 */}
-            <div className="review-header">
-              {/*  총 리뷰수 */}
-              <h3 className="review-header-title">
-                리뷰 (총 <span>{totalReviews}</span>건 )
-              </h3>
-              <div className="review-header-actions">
-                {/* 좌측: 정렬 옵션 */}
-                <div className="review-header-sort">
-                  <button
-                    className={
-                      sortCriteria === "reviewCreatedAt"
-                        ? "sort-button active"
-                        : "sort-button"
-                    }
-                    onClick={() => handleSort("reviewCreatedAt")}
-                  >
-                    {`최신순 ${
-                      sortCriteria === "reviewCreatedAt"
-                        ? sortDirection === "asc"
-                          ? "△"
-                          : "▽"
-                        : ""
-                    }`}
-                  </button>
-                  <button
-                    className={
-                      sortCriteria === "rating"
-                        ? "sort-button active"
-                        : "sort-button"
-                    }
-                    onClick={() => handleSort("rating")}
-                  >
-                    {`별점순 ${
-                      sortCriteria === "rating"
-                        ? sortDirection === "asc"
-                          ? "△"
-                          : "▽"
-                        : ""
-                    }`}
-                  </button>
-                  <div className="sort-divider" />
+                <div className="title">
+                    <h2>{location.locationName}</h2>
+                    <h3>{location.regionName}</h3>
                 </div>
-                {/* 우측: 리뷰 작성 버튼 */}
-                <button
-                  className="review-header-button"
-                  onClick={handleReviewClick}
-                >
-                  리뷰 작성하기
-                </button>
-              </div>
             </div>
-
-            {/* 2. 중간 메인 영역 */}
-            <div className="review-main">
-              {reviewLoading ? (
-                <p>리뷰를 불러오는 중입니다...</p>
-              ) : reviews.length > 0 ? (
-                reviews.map((review, index) => (
-                  <div key={review.reviewId} className="review-item">
-                    {/* 사용자 정보 */}
-                    <div className="review-user-info">
-                      <div className="user-profile-img">
-                        <img
-                          src={userProfiles[index]?.profileImageUrl || ""}
-                          // alt={`${userProfiles[index]?.userNickname || "익명"}의 프로필 이미지`}
+            <div className="overview-container">
+                <div className="inner-wrap">
+                    <img src={location.placeImgUrl} alt={location.locationName}/>
+                    <div className="overview-info">
+                        <h2>{location.locationName}</h2>
+                        <p>{'#' + location.tags.join(' #')}</p>
+                        <div className="overview-info-item">
+                            <h4>소개</h4>
+                            <p>{location.description}</p>
+                        </div>
+                        <div className="overview-info-item">
+                            <h4>별점 및 리뷰</h4>
+                            <p>
+                                <img src={starColor} alt="별 아이콘" className="star-icon" style={{width: "14px"}}/>
+                                <span>구글리뷰 {location.googleRating}</span>
+                                <span>({location.userRatingsTotal} 건의 리뷰)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="content-container">
+                <h4>정보</h4>
+                {/* 지도 로딩 여부 확인 */}
+                {isLoaded ? (
+                    <GoogleMap
+                        className="map"
+                        center={{lat: latitude, lng: longitude}}  // 지도 중심을 메인 장소로 설정
+                        zoom={15}  // 지도 확대 비율
+                        mapContainerStyle={{width: '100%', height: '400px'}}  // 지도 스타일
+                        options={{
+                            disableDefaultUI: true,  // 기본 UI 요소 숨기기 (지도 컨트롤, 확대/축소 등)
+                            scrollwheel: false,  // 마우스 휠로 지도 이동 방지
+                            draggable: false,  // 지도 드래그 이동 방지
+                            gestureHandling: 'none',  // 제스처로 지도 이동 방지
+                            // disableDefaultUI: true,  // 기본 UI 요소 비활성화
+                            clickableIcons: false,  // 기본 아이콘 클릭 방지
+                        }}
+                    >
+                        {/* 고정된 마커 추가 */}
+                        <Marker
+                            position={{lat: latitude, lng: longitude}}
+                            draggable={false}  // 마커 이동 비활성화
                         />
-                      </div>
-                      <p className="user-nickname">
-                        {userProfiles[index].userNickname}
-                      </p>
+                    </GoogleMap>
+                ) : (
+                    <div>Loading map...</div>
+                )}
+                <div className="info">
+                    <div className="info-item">
+                        <h4>전화번호</h4><span>{location.phoneNumber}</span>
                     </div>
-
-                    {/* 리뷰 내용 */}
-                    <div className="review-content">
-                      <div className="review-rating">
-                        {Array(5)
-                          .fill(0)
-                          .map((_, i) => (
-                            <img
-                              key={i}
-                              src={i < review.rating ? starColor : star}
-                              alt={i < review.rating ? "채워진 별" : "빈 별"}
-                              className="star-icon"
-                              style={{ width: "14px" }}
-                            />
-                          ))}
-                      </div>
-                      <h4 className="review-title">{review.title}</h4>
-                      <p className="review-text">{review.comment}</p>
-                      {/* 리뷰 이미지 */}
-                      <div className="review-images">
-                        {review.imageUrls.map((url, imgIndex) => (
-                          <img
-                            key={imgIndex}
-                            src={url || ""}
-                            alt={`리뷰 이미지 ${imgIndex + 1}`}
-                          />
-                        ))}
-                      </div>
-                      <p className="review-date">
-                        {new Date(review.reviewCreatedAt).toLocaleDateString()}
-                      </p>
+                    <div className="info-item">
+                        <h4>운영 시간</h4><span>{location.openingHours}</span>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <p className="no-nearby-locations-message">
-                  작성된 리뷰가 없습니다.
-                </p>
-              )}
+                    <div className="info-item">
+                        <h4>주소</h4><span>{location.formattedAddress}</span>
+                    </div>
+                    <div className="info-item">
+                        <h4>웹사이트 주소</h4>
+                        <a href={location.website} target="_blank" rel="noopener noreferrer">
+                            {location.website}
+                        </a>
+                    </div>
+                </div>
+
+                {/* 주변장소 컨테이너 */}
+                <div className="nearby-locations-container">
+
+                    {/* 태그가 포함되지 않은 근처 장소 */}
+                    <h4>주위의 여행지</h4>
+                    {nearbyLocationsExcludeTag?.length > 0 ? (
+                        <ul className="nearby-locations-list">
+                            {nearbyLocationsExcludeTag.slice(0, 4).map((nearbyLocation) => (
+                                <li
+                                    key={nearbyLocation.locationId}
+                                    className="nearby-location-item"
+                                >
+                                    {/*<Link to={`/attractionDetail/${nearbyLocation.locationId}`} className="nearby-link">*/}
+                                    <a
+                                        href={`/attractionDetail/${nearbyLocation.locationId}`}
+
+                                        rel="noopener noreferrer"
+                                        className="nearby-link"
+                                    >
+                                        <img src={nearbyLocation.placeImgUrl} alt={nearbyLocation.locationName}/>
+                                        <h4>{nearbyLocation.locationName}</h4>
+                                        <p>{nearbyLocation.regionName}</p>
+                                        <p>
+                                            <img src={starColor} alt="별 아이콘" className="star-icon"/>
+                                            <span>구글리뷰 {nearbyLocation.googleRating}</span>
+                                            ({nearbyLocation.userRatingsTotal})
+                                        </p>
+                                        <p>거리 {nearbyLocation.distanceInMeters} m</p>
+                                    </a>
+                                </li>
+                                ))}
+                        </ul>
+                    ) : (
+                        <p className = "no-nearby-locations-message">주위에 여행지가 없습니다.</p>
+                    )}
+
+                    {/* 태그가 포함된 근처 장소 */}
+                    <h4>주위의 음식점</h4>
+                    {nearbyLocationsIncludeTag?.length > 0 ? (
+                        <ul className="nearby-locations-list">
+                            {nearbyLocationsIncludeTag.slice(0, 4).map((nearbyLocation) => (
+                                <li key={nearbyLocation.locationId} className="nearby-location-item">
+                                    <Link to={`/attractionDetail/${nearbyLocation.locationId}`} className="nearby-link">
+                                        <img src={nearbyLocation.placeImgUrl} alt={nearbyLocation.locationName}/>
+                                        <h4>{nearbyLocation.locationName}</h4>
+                                        <p>{nearbyLocation.regionName}</p>
+                                        <p>
+                                            <img src={starColor} alt="별 아이콘" className="star-icon"/>
+                                            <span>구글리뷰 {nearbyLocation.googleRating}</span>
+                                            ({nearbyLocation.userRatingsTotal})
+                                        </p>
+                                        <p>거리 {nearbyLocation.distanceInMeters} m</p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className = "no-nearby-locations-message">주위에 음식점이 없습니다.</p>
+                    )}
+                </div>
+
+                {isModalOpen && (
+                    <div className="modal-backdrop">
+                        <ReviewCreateModal
+                            locationId={locationId}
+                            onClose={closeModal}
+                            onSuccess={handleReviewSuccess} // onSuccess 전달
+                        />
+                    </div>
+                )}
+
+                {/* 리뷰 영역 */}
+                <div className="review-container">
+                    <div className="review-section">
+                        {/* 상단 헤더 영역 */}
+                        <div className="review-header">
+                            {/*  총 리뷰수 */}
+                            <h3 className="review-header-title">리뷰 (총 <span>{totalReviews}</span>건 )</h3>
+                            <div className="review-header-actions">
+                                {/* 좌측: 정렬 옵션 */}
+                                <div className="review-header-sort">
+                                    <button
+                                        className={sortCriteria === 'reviewCreatedAt' ? "sort-button active" : "sort-button"}
+                                        onClick={() => handleSort('reviewCreatedAt')}
+                                    >
+                                        {`최신순 ${sortCriteria === 'reviewCreatedAt' ? (sortDirection === 'asc' ? '△' : '▽') : ''}`}
+                                    </button>
+                                    <button
+                                        className={sortCriteria === 'rating' ? "sort-button active" : "sort-button"}
+                                        onClick={() => handleSort('rating')}
+                                    >
+                                        {`별점순 ${sortCriteria === 'rating' ? (sortDirection === 'asc' ? '△' : '▽') : ''}`}
+                                    </button>
+                                    <div className="sort-divider"/>
+                                </div>
+                                {/* 우측: 리뷰 작성 버튼 */}
+                                <button className="review-header-button" onClick={handleReviewClick}>
+                                    리뷰 작성하기
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* 2. 중간 메인 영역 */}
+                        <div className="review-main">
+                            {reviewLoading ? (
+                                <p>리뷰를 불러오는 중입니다...</p>
+                            ) : reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <div key={review.reviewId} className="review-item">
+                                        {/* 사용자 정보 */}
+                                        <div className="review-user-info">
+                                            <div className="user-profile-img">
+                                                <img
+                                                    src={userProfiles[index]?.profileImageUrl || ""}
+                                                    // alt={`${userProfiles[index]?.userNickname || "익명"}의 프로필 이미지`}
+                                                />
+                                            </div>
+                                            <p className="user-nickname">{userProfiles[index].userNickname}</p>
+                                        </div>
+
+                                        {/* 리뷰 내용 */}
+                                        <div className="review-content">
+                                            <div className="review-rating">
+                                                {Array(5).fill(0).map((_, i) => (
+                                                    <img
+                                                        key={i}
+                                                        src={i < review.rating ? starColor : star}
+                                                        alt={i < review.rating ? "채워진 별" : "빈 별"}
+                                                        className="star-icon"
+                                                        style={{width: '14px'}}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <h4 className="review-title">{review.title}</h4>
+                                            <p className="review-text">{review.comment}</p>
+                                            {/* 리뷰 이미지 */}
+                                            <div className="review-images">
+                                                {review.imageUrls.map((url, imgIndex) => (
+                                                    <img key={imgIndex} src={url || ""} alt={`리뷰 이미지 ${imgIndex + 1}`}/>
+                                                ))}
+                                            </div>
+                                            <p className="review-date">
+                                                {new Date(review.reviewCreatedAt).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className = "no-nearby-locations-message" >작성된 리뷰가 없습니다.</p>
+                            )}
+                        </div>
+
+                        {/* 3. 하단 푸터 영역 */}
+                        <div className="review-footer">
+                            <button
+                                className="pagination-button"
+                                disabled={currentPage === 0}
+                                onClick={() => handlePageChange(currentPage - 1)}
+                            >
+                                <img src={angleSmallLeft} alt="이전"/>
+                            </button>
+
+                            {/* 앞쪽 '...' 표시 */}
+                            {currentPage > 2 && <span className="pagination-ellipsis">...</span>}
+
+                            {/* 페이지 버튼 표시 */}
+                            {(() => {
+                                const startPage = Math.max(0, Math.min(currentPage - 2, totalPages - 5));
+                                const endPage = Math.min(startPage + 5, totalPages);
+                                return Array.from({length: endPage - startPage}, (_, i) => startPage + i).map((page) => (
+                                    <button
+                                        key={page}
+                                        className={`pagination-button ${page === currentPage ? 'active' : ''}`}
+                                        onClick={() => handlePageChange(page)}
+
+                                        // disabled={page === currentPage} // 현재 페이지 비활성화
+                                    >
+                                        {page + 1}
+                                    </button>
+                                ));
+                            })()}
+
+                            {/* 뒤쪽 '...' 표시 */}
+                            {currentPage < totalPages - 3 && <span className="pagination-ellipsis">...</span>}
+
+                            <button
+                                className="pagination-button"
+                                disabled={currentPage === totalPages - 1}
+                                onClick={() => handlePageChange(currentPage + 1)}
+                            >
+                                <img src={angleSmallRight} alt="다음"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            {/* 3. 하단 푸터 영역 */}
-            <div className="review-footer">
-              <button
-                className="pagination-button"
-                disabled={currentPage === 0}
-                onClick={() => handlePageChange(currentPage - 1)}
-              >
-                <img src={angleSmallLeft} alt="이전" />
-              </button>
-
-              {/* 앞쪽 '...' 표시 */}
-              {currentPage > 2 && (
-                <span className="pagination-ellipsis">...</span>
-              )}
-
-              {/* 페이지 버튼 표시 */}
-              {(() => {
-                const startPage = Math.max(
-                  0,
-                  Math.min(currentPage - 2, totalPages - 5)
-                );
-                const endPage = Math.min(startPage + 5, totalPages);
-                return Array.from(
-                  { length: endPage - startPage },
-                  (_, i) => startPage + i
-                ).map((page) => (
-                  <button
-                    key={page}
-                    className={`pagination-button ${
-                      page === currentPage ? "active" : ""
-                    }`}
-                    onClick={() => handlePageChange(page)}
-
-                    // disabled={page === currentPage} // 현재 페이지 비활성화
-                  >
-                    {page + 1}
-                  </button>
-                ));
-              })()}
-
-              {/* 뒤쪽 '...' 표시 */}
-              {currentPage < totalPages - 3 && (
-                <span className="pagination-ellipsis">...</span>
-              )}
-
-              <button
-                className="pagination-button"
-                disabled={currentPage === totalPages - 1}
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                <img src={angleSmallRight} alt="다음" />
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
   );
 };
 

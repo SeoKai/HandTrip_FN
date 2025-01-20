@@ -8,7 +8,8 @@ import starColor from "../../img/icons/starColor.png";
 import heart from "../../img/icons/heart.png";
 import heartFilled from "../../img/icons/heartFilled.png";
 import Compressor from "compressorjs";
-import ChangePasswordModal from "./ChangePasswordModal";
+import ChangePasswordModal from "../../component/MyPage/ChangePasswordModal";
+import ProfileEditModal from "../../component/MyPage/ProfileEditModal"
 import angleSmallLeft from "../../img/icons/angleSmallLeft.png";
 import angleSmallRight from "../../img/icons/angleSmallRight.png";
 import star from "../../img/icons/star.png";
@@ -26,6 +27,8 @@ const MyPage = () => {
   const [initialProfileImageUrl, setInitialProfileImageUrl] = useState(""); // 초기 프로필 이미지 URL 저장
   const [showPasswordChangeButton, setShowPasswordChangeButton] =
     useState(false); // 비밀번호 변경 버튼 표시 여부
+  const [isProfileEditModalOpen, setProfileEditModalOpen] = useState(false); // 프로필 수정 모달 열림 여부
+  const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false); // 비밀번호 변경 모달 열림 여부
 
   // 사용자가 업로드한 이미지를 압축함
   const handleImageUpload = (file) => {
@@ -34,6 +37,7 @@ const MyPage = () => {
       return;
     }
 
+
     // 미리보기 이미지 URL 설정
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -41,19 +45,25 @@ const MyPage = () => {
     };
     reader.readAsDataURL(file);
 
-    new Compressor(file, {
-      quality: 0.6,
-      maxWidth: 800,
-      maxHeight: 800,
-      success: (compressedFile) => {
-        // 파일 이름 복원
-        const restoredFile = new File([compressedFile], file.name, {
-          type: compressedFile.type,
-        });
+      new Compressor(file, {
+          quality: 0.6,
+          maxWidth: 800,
+          maxHeight: 800,
+          success: (compressedBlob) => {
+              console.log("압축된 Blob:", compressedBlob);
 
-        // 파일을 상태에 저장
-        setCompressedImage(restoredFile);
-      },
+              // Blob을 File 객체로 변환하며 파일 이름 유지
+              const compressedFile = new File([compressedBlob], file.name, {
+                  type: compressedBlob.type,
+                  lastModified: Date.now(),
+              });
+
+              console.log("압축된 File 객체:", compressedFile);
+
+              // 변환된 File 객체를 상태에 저장
+              setCompressedImage(compressedFile);
+          },
+
       error: (err) => {
         console.error("이미지 압축 실패: ", err);
       },
@@ -99,6 +109,7 @@ const MyPage = () => {
   const updateUserProfile = async () => {
     const formData = new FormData();
     formData.append("profileImage", compressedImage); // FormData에 파일 추가
+    console.log(compressedImage)
 
     try {
       const response = await axios.post(
@@ -106,7 +117,7 @@ const MyPage = () => {
         formData,
         {
           headers: {
-            "Content-Type": "multiple/form-data",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
@@ -131,15 +142,17 @@ const MyPage = () => {
       if (updateResponse && updateResponse.data) {
         console.log("업데이트된 프로필 응답:", updateResponse.data);
         setUserProfile(updateResponse.data); // 최종적으로 업데이트된 프로필 상태 저장
-        alert("프로필이 성공적으로 업데이트되었습니다.");
         setIsEditing(false); // 수정 모드 종료
+        return true;
       }
     } catch (error) {
-      alert("프로필 업데이트에 실패했습니다.");
-      console.error(
-        "프로필 이미지 저장 또는 프로필 업데이트에 실패했습니다.",
-        error
-      );
+      if(error.response.data === "지원되지 않는 파일 형식입니다."){
+        alert(`${error.response.data}\n프로필 사진은 jpg, jpeg, png 파일만 허용됩니다.`);  
+      }else{
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
+      console.error("프로필 이미지 저장 또는 프로필 업데이트에 실패했습니다.",error);
+      return false;
     }
   };
 
@@ -157,10 +170,16 @@ const MyPage = () => {
     if (originalProfile) {
       setUserProfile(originalProfile); // 초기 데이터로 복원
     }
-    setPreviewImage(initialProfileImageUrl); // 취소 시 원래 프로필 이미지로 복원
+    setPreviewImage(initialProfileImageUrl || userProfile.profileImageUrl || ""); // 취소 시 원래 프로필 이미지로 복원
     setIsEditing(false); // 수정 모드 비활성화
     setShowPasswordChangeButton(false); // 비밀번호 변경 버튼 숨기기
   };
+
+  useEffect(() => {
+    if (isProfileEditModalOpen) {
+      setPreviewImage(initialProfileImageUrl || userProfile.profileImageUrl || ""); // 모달 열릴 때 초기화
+    }
+  }, [isProfileEditModalOpen, initialProfileImageUrl, userProfile.profileImageUrl]);
 
   const toggleOptions = (id) => {
     setActiveOptions((prev) => (prev === id ? null : id)); // 같은 ID 클릭 시 닫기
@@ -270,17 +289,17 @@ const MyPage = () => {
     return `${year}-${month}-${day}`;
   };
 
-  useEffect(() => {
-    // 여행 계획 데이터 가져오기
-    const fetchPlans = async () => {
-      setLoading(true); // 로딩 시작
-      try {
-        const token = localStorage.getItem("accessToken");
+    useEffect(() => {
+        // 여행 계획 데이터 가져오기
+        const fetchPlans = async () => {
+            setLoading(true); // 로딩 시작
+            try {
+                const token = localStorage.getItem('accessToken');
 
-        if (!token) {
-          setError("로그인이 필요합니다.");
-          return;
-        }
+                if (!token) {
+                    setError('로그인이 필요합니다.');
+                    return;
+                }
 
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/planner/user/plans`,
@@ -291,35 +310,35 @@ const MyPage = () => {
           }
         );
 
-        if (response.data) {
-          const updatedPlans = response.data.map((plan) => {
-            const startDate = new Date(plan.plannerStartDate);
-            const endDate = new Date(plan.plannerEndDate);
-            const days = Math.ceil(
-              (endDate - startDate) / (1000 * 60 * 60 * 24)
-            );
+                if (response.data) {
+                    const updatedPlans = response.data.map((plan) => {
+                        const startDate = new Date(plan.plannerStartDate);
+                        const endDate = new Date(plan.plannerEndDate);
+                        const days = Math.ceil(
+                            (endDate - startDate) / (1000 * 60 * 60 * 24)
+                        );
 
-            // 첫 번째 이미지 가져오기
-            const firstImage =
-              plan.dailyPlans[0]?.toDos[0]?.placeImgUrl ||
-              "https://via.placeholder.com/100";
+                        // 첫 번째 이미지 가져오기
+                        const firstImage =
+                            plan.dailyPlans[0]?.toDos[0]?.placeImgUrl ||
+                            'https://via.placeholder.com/100';
 
-            return {
-              ...plan,
-              duration: `${days}박 ${days + 1}일`,
-              imageUrl: firstImage, // 첫 번째 이미지 설정
-              city: plan.regionName || "알 수 없음",
-            };
-          });
-          setPlans(updatedPlans); // 플래너 데이터 설정
-        }
-      } catch (err) {
-        console.error("여행 계획 데이터를 가져오는 데 실패했습니다:", err);
-        setError("여행 계획 데이터를 불러오지 못했습니다.");
-      } finally {
-        setLoading(false); // 로딩 종료
-      }
-    };
+                        return {
+                            ...plan,
+                            duration: `${days}박 ${days + 1}일`,
+                            imageUrl: firstImage, // 첫 번째 이미지 설정
+                            city: plan.regionName || '알 수 없음',
+                        };
+                    });
+                    setPlans(updatedPlans); // 플래너 데이터 설정
+                }
+            } catch (err) {
+                console.error('여행 계획 데이터를 가져오는 데 실패했습니다:', err);
+                setError('여행 계획 데이터를 불러오지 못했습니다.');
+            } finally {
+                setLoading(false); // 로딩 종료
+            }
+        };
 
     fetchPlans();
   }, []);
@@ -385,20 +404,20 @@ const MyPage = () => {
         }
       );
 
-      setPlans((prevPlans) =>
-        prevPlans.filter((plan) => plan.plannerId !== plannerId)
-      );
-      alert("플래너가 삭제되었습니다.");
-    } catch (error) {
-      console.error("플래너 삭제 실패:", error);
-      alert("플래너 삭제 중 오류가 발생했습니다.");
-    }
-  };
+            setPlans((prevPlans) =>
+                prevPlans.filter((plan) => plan.plannerId !== plannerId)
+            );
+            alert('플래너가 삭제되었습니다.');
+        } catch (error) {
+            console.error('플래너 삭제 실패:', error);
+            alert('플래너 삭제 중 오류가 발생했습니다.');
+        }
+    };
 
-  const [favoriteLocations, setFavoriteLocations] = useState([]);
-  const [totalFavorite, setTotalFavorite] = useState(0);
-  const [currentFavoritePage, setCurrentFavoritePage] = useState(0);
-  const [totalFavoritePages, setTotalFavoritePages] = useState(0);
+    const [favoriteLocations, setFavoriteLocations] = useState([]);
+    const [totalFavorite, setTotalFavorite] = useState(0);
+    const [currentFavoritePage, setCurrentFavoritePage] = useState(0);
+    const [totalFavoritePages, setTotalFavoritePages] = useState(0);
 
   // 찜한 여행지 정보 가져오기
   const fetchFavoriteLocation = async (pageNumber = 0) => {
@@ -419,27 +438,27 @@ const MyPage = () => {
         }
       );
 
-      // 데이터에 isFavorite 필드 추가
-      const updatedLocations = response.data.content.map((location) => ({
-        ...location,
-        isFavorite: true, // 초기값은 모두 찜 상태로 설정
-      }));
+            // 데이터에 isFavorite 필드 추가
+            const updatedLocations = response.data.content.map((location) => ({
+                ...location,
+                isFavorite: true, // 초기값은 모두 찜 상태로 설정
+            }));
 
-      setFavoriteLocations(updatedLocations); // 받아온 데이터로 상태 업데이트
-      setTotalFavorite(response.data.totalElements);
-      setCurrentFavoritePage(pageNumber); // 현재 페이지 업데이트
-      setTotalFavoritePages(response.data.totalPages);
-    } catch (error) {
-      console.error("즐겨찾기 목록 조회 실패", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+            setFavoriteLocations(updatedLocations); // 받아온 데이터로 상태 업데이트
+            setTotalFavorite(response.data.totalElements);
+            setCurrentFavoritePage(pageNumber); // 현재 페이지 업데이트
+            setTotalFavoritePages(response.data.totalPages);
+        } catch (error) {
+            console.error("즐겨찾기 목록 조회 실패", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const toggleFavorite = async (locationId) => {
-    const targetLocation = favoriteLocations.find(
-      (loc) => loc.locationId === locationId
-    );
+    const toggleFavorite = async (locationId) => {
+        const targetLocation = favoriteLocations.find(
+            (loc) => loc.locationId === locationId
+        );
 
     try {
       if (targetLocation.isFavorite) {
@@ -470,31 +489,30 @@ const MyPage = () => {
         alert("찜이 추가되었습니다.");
       }
 
-      // 클라이언트 상태 업데이트
-      setFavoriteLocations((prev) =>
-        prev.map((loc) =>
-          loc.locationId === locationId
-            ? { ...loc, isFavorite: !loc.isFavorite }
-            : loc
-        )
-      );
-    } catch (error) {
-      console.error("찜 상태 변경 실패:", error);
-      alert("찜 상태를 변경하는 데 실패했습니다. 다시 시도해주세요.");
-    }
-  };
+            // 클라이언트 상태 업데이트
+            setFavoriteLocations((prev) =>
+                prev.map((loc) =>
+                    loc.locationId === locationId
+                        ? { ...loc, isFavorite: !loc.isFavorite }
+                        : loc
+                )
+            );
+        } catch (error) {
+            console.error("찜 상태 변경 실패:", error);
+            alert("찜 상태를 변경하는 데 실패했습니다. 다시 시도해주세요.");
+        }
+    };
 
-  // 페이지 로드 시 찜한 여행지 데이터를 가져옴
-  useEffect(() => {
-    fetchFavoriteLocation(); // 첫 로드 시 호출
-  }, []); // 빈 배열을 전달해 컴포넌트 마운트 시 실행
+    // 페이지 로드 시 찜한 여행지 데이터를 가져옴
+    useEffect(() => {
+        fetchFavoriteLocation(); // 첫 로드 시 호출
+    }, []); // 빈 배열을 전달해 컴포넌트 마운트 시 실행
 
   return (
-    <div className="mypage-container">
+    <div className="Mypage">
       <header className="mypage-header">
         <img
           src={
-            previewImage ||
             userProfile.profileImageUrl ||
             "https://via.placeholder.com/100"
           }
@@ -502,85 +520,42 @@ const MyPage = () => {
           className="profile-img"
         />
         <div className="profile-info">
-          <div className="Profile">
-            {isEditing ? (
-              <div className="profile-edit-form">
-                <div className="profile-edit-input-container">
-                  <label className="profile-edit-label">
-                    닉네임
-                    <input
-                      type="text"
-                      value={userProfile.userNickname}
-                      onChange={(e) =>
-                        setUserProfile({
-                          ...userProfile,
-                          userNickname: e.target.value,
-                        })
-                      }
-                      className="profile-edit-input"
-                      placeholder="닉네임을 입력하세요"
-                    />
-                  </label>
-
-                  <label className="profile-edit-image-label">
-                    프로필 이미지
-                    <input
-                      type="file"
-                      onChange={(e) => {
-                        const file = e.target.files ? e.target.files[0] : null; // 파일 존재 확인
-                        if (file) {
-                          handleImageUpload(file);
-                        } else {
-                          console.log("파일이 선택되지 않았습니다."); // 취소했을 때 메시지
-                        }
-                      }} // 이미지 업로드 처리
-                      className="profile-edit-input-file"
-                    />
-                  </label>
-                </div>
-              </div>
-            ) : (
+          <div className="profile">
               <div className="profile-viewer">
                 <h2>반가워요! {userProfile.userNickname || "OOO"}님</h2>
-                <button className="profile-button" onClick={enterEditMode}>
+                <button className="profile-button" onClick={() => setProfileEditModalOpen(true)}>
                   프로필 설정⚙️
                 </button>
               </div>
-            )}
           </div>
-
-          {isEditing ? (
-            <div className="profile-edit-buttons">
-              <button className="save-button" onClick={updateUserProfile}>
-                저장
+            <div className="navigation">
+              <button className="active">
+                나의 여행 계획 {plans.length}
               </button>
-              <button className="cancel-button" onClick={cancelEdit}>
-                취소
-              </button>
+              <button>나의 리뷰 {totalReviews}</button>
+              <button>찜한 여행지 {totalFavorite}</button>
             </div>
-          ) : (
-            <>
-              <div className="navigation">
-                <span className="active">나의 여행 계획 {plans.length}</span>
-                <span>나의 리뷰 {totalReviews}</span>
-                <span>찜한 여행지 {totalFavorite}</span>
-              </div>
-            </>
-          )}
         </div>
-        {showPasswordChangeButton && (
-          <button
-            onClick={() => setModalOpen(true)}
-            className="password-change-button"
-          >
-            비밀번호 변경
-          </button>
-        )}
       </header>
-      {/* 비밀번호 변경 모달 */}
+      {/* 프로필 변경 모달 */}
+      <ProfileEditModal
+        isOpen={isProfileEditModalOpen}
+        setProfileEditModalOpen={setProfileEditModalOpen}
+        setChangePasswordModalOpen={setChangePasswordModalOpen}
+        userProfile={userProfile}
+        setUserProfile={setUserProfile}
+        handleImageUpload={handleImageUpload}
+        updateUserProfile={updateUserProfile}
+        previewImage={previewImage}
+        cancelEdit={() => {
+          setPreviewImage(userProfile.profileImageUrl || ""); // 초기화 로직
+          setProfileEditModalOpen(false); // 모달 닫기
+        }}
+      />
+
       <ChangePasswordModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)} // 닫기 핸들러
+        isOpen={isChangePasswordModalOpen}
+        onClose={() => setChangePasswordModalOpen(false)}
       />
 
       <nav className="mypage-tabs">
@@ -647,7 +622,6 @@ const MyPage = () => {
                         >
                           상세 보기
                         </button>
-
                         <button
                           onClick={() => handleDeletePlan(plan.plannerId)}
                         >
@@ -671,127 +645,122 @@ const MyPage = () => {
               {reviews.map((review, index) => (
                 <div key={review.reviewId} className="review-card">
                   <div className="myPage-review-header">
-                    <div className="myPage-review-header-left">
-                      <div className="myPage-review-location-info">
-                        {/* 위치 이미지가 있을 경우 표시 */}
-                        {reviewLocation[index]?.placeImgUrl && (
-                          <Link
-                            to={`/attractionDetail/${reviewLocation[index].locationId}`}
-                          >
-                            <img
-                              src={reviewLocation[index].placeImgUrl}
-                              alt={reviewLocation[index].locationName}
-                              className="myPage-review-location-image"
-                            />
-                          </Link>
-                        )}
-                        <div className="myPage-review-location-name">
-                          <Link
-                            to={`/attractionDetail/${reviewLocation[index]?.locationId}`}
-                          >
-                            <span>
-                              {reviewLocation[index]?.locationName ||
-                                "알 수 없음"}
-                            </span>
-                          </Link>
-                          <p>
-                            {reviewLocation[index]?.regionName || "알 수 없음"}
-                          </p>
-                        </div>
+                      <div className="myPage-review-header-left">
+                          <div className="myPage-review-location-info">
+                              {/* 위치 이미지가 있을 경우 표시 */}
+                              {reviewLocation[index]?.placeImgUrl && (
+                                  <Link
+                                      to={`/attractionDetail/${reviewLocation[index].locationId}`}
+                                  >
+                                      <img
+                                          src={reviewLocation[index].placeImgUrl}
+                                          alt={reviewLocation[index].locationName}
+                                          className="myPage-review-location-image"
+                                      />
+                                  </Link>
+                              )}
+                              <div className="myPage-review-location-name">
+                              <Link
+                                  to={`/attractionDetail/${reviewLocation[index]?.locationId}`}
+                              >
+                                      <span>
+                                        {reviewLocation[index]?.locationName || "알 수 없음"}
+                                      </span>
+                              </Link>
+                                  <p>{reviewLocation[index]?.regionName || "알 수 없음"}</p>
+                              </div>
+                          </div>
                       </div>
-                    </div>
-                    {/* 우측에 ⋮ 버튼 옵션 */}
-                    <div className="myPage-review-options">
-                      <button
-                        className="myPage-review-options-button"
-                        onClick={() => toggleOptions(review.reviewId)}
-                      >
-                        ⋮
-                      </button>
-                      {/* 옵션 메뉴가 열리면 수정 및 삭제 버튼 표시 */}
-                      {activeOptions === review.reviewId && (
-                        <div className="myPage-review-options-menu">
-                          <button onClick={() => openReviewModal(review)}>
-                            수정
-                          </button>
+                      {/* 우측에 ⋮ 버튼 옵션 */}
+                      <div className="myPage-review-options">
                           <button
-                            onClick={() => handleDeleteReview(review.reviewId)}
+                              className="myPage-review-options-button"
+                              onClick={() => toggleOptions(review.reviewId)}
                           >
-                            삭제
+                              ⋮
                           </button>
+                          {/* 옵션 메뉴가 열리면 수정 및 삭제 버튼 표시 */}
+                          {activeOptions === review.reviewId && (
+                              <div className="myPage-review-options-menu">
+                                  <button onClick={() => openReviewModal(review)}>
+                                      수정
+                                  </button>
+                                  <button
+                                      onClick={() => handleDeleteReview(review.reviewId)}
+                                  >
+                                      삭제
+                                  </button>
+                              </div>
+                          )}
+                    </div>
+                  </div>
+                    <div className="myPage-review-content">
+                        <div className="myPage-review-rating">
+                            {Array(5).fill(0).map((_, i) => (
+                                <img
+                                    key={i}
+                                    src={i < review.rating ? starColor : star}
+                                    alt={i < review.rating ? "채워진 별" : "빈 별"}
+                                    className="star-icon"
+                                    style={{width: '14px'}}
+                                />
+                            ))}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="myPage-review-content">
-                    <div className="myPage-review-rating">
-                      {Array(5)
-                        .fill(0)
-                        .map((_, i) => (
-                          <img
-                            key={i}
-                            src={i < review.rating ? starColor : star}
-                            alt={i < review.rating ? "채워진 별" : "빈 별"}
-                            className="star-icon"
-                            style={{ width: "14px" }}
-                          />
-                        ))}
-                    </div>
-                    <h3>{review.title}</h3>
-                    <p>{review.comment}</p>
+                        <h3>{review.title}</h3>
+                        <p>{review.comment}</p>
 
-                    {/* 리뷰 이미지 */}
-                    <div className="myPage-review-images">
-                      {review.imageUrls &&
-                        review.imageUrls.length > 0 &&
-                        review.imageUrls.map((imageUrl, idx) => (
-                          <img
-                            key={idx}
-                            src={imageUrl}
-                            alt={`review-image-${idx}`}
-                            className="myPage-review-image"
-                          />
-                        ))}
+                        {/* 리뷰 이미지 */}
+                        <div className="myPage-review-images">
+                            {review.imageUrls &&
+                                review.imageUrls.length > 0 &&
+                                review.imageUrls.map((imageUrl, idx) => (
+                                    <img
+                                        key={idx}
+                                        src={imageUrl}
+                                        alt={`review-image-${idx}`}
+                                        className="myPage-review-image"
+                                    />
+                                ))}
+                        </div>
+                        <p className="myPage-review-create-date">
+                            {new Date(review.reviewCreatedAt).toLocaleDateString()}
+                        </p>
                     </div>
-                    <p className="myPage-review-create-date">
-                      {new Date(review.reviewCreatedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  {/* 리뷰 수정 모달 */}
-                  {isReviewModalOpen && (
-                    <ReviewCreateModal
-                      mode={reviewMode} // 'edit' 모드로 설정
-                      initialData={initialData} // 수정할 기존 리뷰 데이터 전달
-                      locationId={reviewLocation[index].locationId}
-                      onClose={() => setIsReviewModalOpen(false)} // 모달 닫기
-                      onSuccess={handleEditReviewSuccess} // 수정 성공 시 호출
-                    />
-                  )}
+                    {/* 리뷰 수정 모달 */}
+                    {isReviewModalOpen && (
+                        <ReviewCreateModal
+                            mode={reviewMode} // 'edit' 모드로 설정
+                            initialData={initialData} // 수정할 기존 리뷰 데이터 전달
+                            locationId={reviewLocation[index].locationId}
+                            onClose={() => setIsReviewModalOpen(false)} // 모달 닫기
+                            onSuccess={handleEditReviewSuccess} // 수정 성공 시 호출
+                        />
+                    )}
                 </div>
               ))}
             </div>
 
-            <div className="mypage-pagination">
-              <button
-                disabled={currentPage <= 0}
-                onClick={() => handlePageChange(currentPage - 1)}
-              >
-                <img src={angleSmallLeft} alt="이전" />
-              </button>
-              <span>
-                {currentPage + 1} / {totalPages}
-              </span>
-              <button
-                disabled={currentPage >= totalPages - 1}
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                <img src={angleSmallRight} alt="다음" />
-              </button>
-            </div>
+              <div className="mypage-pagination">
+                  <button
+                      disabled={currentPage <= 0}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                  >
+                      <img src={angleSmallLeft} alt="이전"/>
+                  </button>
+                  <span>
+                      {currentPage + 1} / {totalPages}
+                  </span>
+                  <button
+                      disabled={currentPage >= totalPages - 1}
+                      onClick={() => handlePageChange(currentPage + 1)}
+                  >
+                      <img src={angleSmallRight} alt="다음"/>
+                  </button>
+              </div>
           </>
         )}
 
-        {/* 찜한 여행지 목록 */}
+          {/* 찜한 여행지 목록 */}
         {activeTab === "favorites" && (
           <div className="mypage-favorite-destination">
             <h3>찜한 여행지 목록</h3>
@@ -814,28 +783,28 @@ const MyPage = () => {
                     <Link to={`/attractionDetail/${destination.locationId}`}>
                       <h4>{destination.locationName}</h4>
                     </Link>
-                    <div className="mypage-favorite-destination-info">
-                      <p>{destination.regionName}</p>
-                      <div className="mypage-favorite-destination-star-rating">
-                        <img
-                          src={starColor}
-                          alt="별 아이콘"
-                          className="mypage-favorite-destination-star-icon"
-                        />
-                        <span>구글리뷰 {destination.googleRating}</span>(
-                        {destination.userRatingsTotal})
+                      <div className="mypage-favorite-destination-info">
+                          <p>{destination.regionName}</p>
+                          <div className="mypage-favorite-destination-star-rating">
+                              <img
+                                  src={starColor}
+                                  alt="별 아이콘"
+                                  className="mypage-favorite-destination-star-icon"
+                              />
+                              <span>구글리뷰 {destination.googleRating}</span>
+                              ({destination.userRatingsTotal})
+                          </div>
+                          <p>{'#' + destination.tags.join(' #')}</p>
                       </div>
-                      <p>{"#" + destination.tags.join(" #")}</p>
-                    </div>
 
-                    {/* 하트 아이콘 */}
-                    <button
-                      className="mypage-favorite-destination-heart-button"
-                      onClick={() => toggleFavorite(destination.locationId)}
-                    >
-                      <img
-                        src={
-                          destination.isFavorite ? heartFilled : heart
+                      {/* 하트 아이콘 */}
+                      <button
+                          className="mypage-favorite-destination-heart-button"
+                          onClick={() => toggleFavorite(destination.locationId)}
+                      >
+                          <img
+                              src={
+                                  destination.isFavorite ? heartFilled : heart
                         } /* isFavorite 값에 따라 변경 */
                         alt="하트 아이콘"
                         className="mypage-favorite-destination-heart-icon"
@@ -846,23 +815,23 @@ const MyPage = () => {
               </div>
             )}
 
-            <div className="mypage-pagination">
-              <button
-                disabled={currentFavoritePage <= 0}
-                onClick={() => fetchFavoriteLocation(currentFavoritePage - 1)}
-              >
-                <img src={angleSmallLeft} alt="이전" />
-              </button>
-              <span>
-                {currentFavoritePage + 1} / {totalFavoritePages}
-              </span>
-              <button
-                disabled={currentFavoritePage >= totalFavoritePages - 1}
-                onClick={() => fetchFavoriteLocation(currentFavoritePage + 1)}
-              >
-                <img src={angleSmallRight} alt="다음" />
-              </button>
-            </div>
+              <div className="mypage-pagination">
+                  <button
+                      disabled={currentFavoritePage <= 0}
+                      onClick={() => fetchFavoriteLocation(currentFavoritePage - 1)}
+                  >
+                      <img src={angleSmallLeft} alt="이전"/>
+                  </button>
+                  <span>
+                    {currentFavoritePage + 1} / {totalFavoritePages}
+                  </span>
+                  <button
+                      disabled={currentFavoritePage >= totalFavoritePages - 1}
+                      onClick={() => fetchFavoriteLocation(currentFavoritePage + 1)}
+                  >
+                      <img src={angleSmallRight} alt="다음"/>
+                  </button>
+              </div>
           </div>
         )}
       </div>

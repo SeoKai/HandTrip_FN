@@ -11,7 +11,6 @@ const SignUp = () => {
     userPassword: "",
     userPhone: "",
     userNickname: "",
-    userNickname: "",
     userPasswordConfirm: "",
   });
   const { setUser, setIsAuthenticated } = useContext(AuthContext); // React 상태 업데이트 함수
