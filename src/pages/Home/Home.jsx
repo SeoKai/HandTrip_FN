@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from "react";
-import "./Home.css";
-import Card from "../../component/Card";
-import Food from "../../img/Food.jpg";
-import TouristAttraction from "../../img/TouristAttraction.jpg";
-import Culture from "../../img/Culture.jpg";
-import Shopping from "../../img/Shopping.jpg";
-import Landmark from "../../img/Landmark.jpg";
-import map from "../../img/map.jpg";
-import Harajuku from "../../img/Harajuku.png";
-import Dotonbori from "../../img/Dotonbori.jpg";
-import FushimiInariShrine from "../../img/FushimiInariShrine.jpg";
-import MainBanner from "../../img/MainBanner.jpg";
-import SecondBanner from "../../img/SecondBanner.jpg";
-import ThirdBanner from "../../img/ThirdBanner.jpg";
-import PlanImg from "../../img/PlanImg.jpg";
-import RandomPlaces from "../../component/RandomPlaces";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import './Home.css';
+import Card from '../../component/Card';
+import Food from '../../img/Food.jpg';
+import TouristAttraction from '../../img/TouristAttraction.jpg';
+import Culture from '../../img/Culture.jpg';
+import Shopping from '../../img/Shopping.jpg';
+import Landmark from '../../img/Landmark.jpg';
+import map from '../../img/map.jpg';
+import Harajuku from '../../img/Harajuku.png';
+import Dotonbori from '../../img/Dotonbori.jpg';
+import FushimiInariShrine from '../../img/FushimiInariShrine.jpg';
+import MainBanner from '../../img/MainBanner.jpg';
+import SecondBanner from '../../img/SecondBanner.jpg';
+import ThirdBanner from '../../img/ThirdBanner.jpg';
+import PlanImg from '../../img/PlanImg.jpg';
+import RandomPlaces from '../../component/RandomPlaces';
+import axios from 'axios';
 
-import { Swiper, SwiperSlide } from "swiper/react"; // 슬라이더 불러오기
+import { Swiper, SwiperSlide } from 'swiper/react'; // 슬라이더 불러오기
 // Swiper 모듈 가져오기
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 // AOS 불러오기
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Home() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [searchParams] = useSearchParams();
-  const showModal = searchParams.get("showModal") === "true";
+  const showModal = searchParams.get('showModal') === 'true';
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -52,35 +52,37 @@ function Home() {
   const [recommendations, setRecommendations] = useState([]); // 추천 데이터를 저장할 상태
   const [title, setTitle] = useState(); // 제목 상태
 
-  // AOS 초기화 및 axios 요청
   useEffect(() => {
     // AOS 초기화
     AOS.init({
       duration: 1000, // 애니메이션 지속 시간
     });
 
-    const token = localStorage.getItem("accessToken"); // JWT 토큰 가져오기
+    const token = localStorage.getItem('accessToken'); // JWT 토큰 가져오기
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {}; // 비로그인 상태에서는 헤더 없이 요청
 
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/api/ai/verify`, {}, { headers })
       .then((response) => {
-        console.log("Recommendations", response.data);
-        setRecommendations(response.data);
+        console.log('Recommendations', response.data);
+        const { locations, isRandomData } = response.data;
+
+        setRecommendations(locations);
 
         // 제목 설정
-        if (token && response.data.length > 0) {
-          setTitle("AI 추천 여행지");
+        if (isRandomData) {
+          setTitle('Google 평점이 높은 추천 여행지');
         } else {
-          setTitle("Google 평점이 높은 추천 여행지");
+          setTitle('AI 추천 여행지');
         }
       })
       .catch((err) => {
-        console.error("Error fetching recommendations:", err);
-        setTitle("추천 데이터를 불러오지 못했습니다.");
+        console.error('Error fetching recommendations:', err);
+        setTitle('추천 데이터를 불러오지 못했습니다.');
       });
   }, []);
+
   return (
     <div className="Home">
       {/* RandomPlaces를 모달로 렌더링 */}
@@ -104,7 +106,7 @@ function Home() {
             >
               <a href="#">
                 <span>
-                  {" "}
+                  {' '}
                   떠나고 싶은 그 순간, 일본의 하늘 아래에서 새로운 이야기를
                   시작하세요.
                 </span>
@@ -149,7 +151,7 @@ function Home() {
             value={searchTerm}
             onChange={handleSearchChange}
             onKeyDown={(event) => {
-              if (event.key === "Enter") {
+              if (event.key === 'Enter') {
                 // 엔터 키 감지
                 handleSearchSubmit();
               }
@@ -172,11 +174,11 @@ function Home() {
                 }
               >
                 <Card
-                  image={location.placeImgUrl || ""} // 이미지 URL
-                  title={location.locationName || "장소 이름 없음"} // 장소 이름
-                  location={location.regionName || "지역 정보 없음"} // 지역 이름
-                  rating={`Google 평점: ${location.googleRating || "N/A"}`} // 평점
-                  description={location.description || "설명이 없습니다."} // 설명
+                  image={location.placeImgUrl || ''} // 이미지 URL
+                  title={location.locationName || '장소 이름 없음'} // 장소 이름
+                  location={location.regionName || '지역 정보 없음'} // 지역 이름
+                  rating={`Google 평점: ${location.googleRating || 'N/A'}`} // 평점
+                  description={location.description || '설명이 없습니다.'} // 설명
                 />
               </div>
             ))}
