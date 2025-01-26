@@ -2,212 +2,211 @@
 .AttractionDetail .title-container,
 .AttractionDetail .overview-container .inner-wrap,
 .AttractionDetail .content-container {
-    padding: 0 40px;
-    max-width: 1280px;
-    margin: auto;
+  padding: 0 40px;
+  max-width: 1280px;
+  margin: auto;
 }
 
 .AttractionDetail .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .AttractionDetail .title-container .back {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .AttractionDetail .title-container .title {
-    flex-grow: 1;
-    padding: 45px 0 30px 0;
-    text-align: center;
+  flex-grow: 1;
+  padding: 45px 0 30px 0;
+  text-align: center;
 }
 
 .AttractionDetail .title-container h2 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .AttractionDetail .title-container h3 {
-    font-size: 20px;
-    font-weight: 500;
-    color: #aaa;
+  font-size: 20px;
+  font-weight: 500;
+  color: #aaa;
 }
 
 /* 개요 */
 .AttractionDetail .overview-container {
-    background: #F5F6FB;
-    height: 400px;
+  background: #f5f6fb;
+  height: 400px;
 }
 
 .AttractionDetail .overview-container .inner-wrap {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  height: 100%;
 }
 
 /* 대표 이미지 */
 .AttractionDetail .overview-container .inner-wrap > img {
-    width: 400px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 8px;
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .AttractionDetail .overview-info {
-    flex: 1;
+  flex: 1;
 }
 
 /* 개요 - 제목 */
 .AttractionDetail .overview-info h2 {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 /* 개요 - 내용 */
 .AttractionDetail .overview-info p {
-    line-height: 185%;
+  line-height: 185%;
 }
 
 /* 태그 */
 .AttractionDetail .overview-info > p:first-of-type {
-    font-size: 14px;
-    color: #aaa;
-    padding-bottom: 10px;
+  font-size: 14px;
+  color: #aaa;
+  padding-bottom: 10px;
 }
 
 /* 소개 */
 .AttractionDetail .overview-info-item h4 {
-    font-weight: 500;
-    width: 20%;
+  font-weight: 500;
+  width: 20%;
 }
 
 .AttractionDetail .overview-info-item {
-    display: flex;
-    align-items: baseline;
+  display: flex;
+  align-items: baseline;
 }
 
 /* 별점 및 리뷰 */
 .AttractionDetail .overview-info-item > p {
-    display: flex;
-    align-items: center;
-    width: 80%;
+  display: flex;
+  align-items: center;
+  width: 80%;
 }
 
 .AttractionDetail .overview-info-item > p span {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 .AttractionDetail .overview-info-item > p span:nth-of-type(2) {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 /* 정보 */
 .AttractionDetail .content-container {
-    margin-top: 70px;
+  margin-top: 70px;
 }
 
 .AttractionDetail .content-container > h4,
 .AttractionDetail .nearby-locations-container > h4 {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .AttractionDetail .content-container > h4 {
-    padding: 8px 0;
-    margin-bottom: 40px;
-    border-bottom: 2px solid #222;
+  padding: 8px 0;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #222;
 }
 
 .AttractionDetail .content-container .info {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem; /* 항목 간 간격 */
-    margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 항목 간 간격 */
+  margin-top: 40px;
 }
 
 .AttractionDetail .content-container .info-item {
-    display: flex;
+  display: flex;
 }
 
 .AttractionDetail .content-container .info-item h4 {
-    width: 15%;
-    font-weight: 500;
+  width: 15%;
+  font-weight: 500;
 }
 
 .AttractionDetail .content-container .info-item span {
-    width: 85%;
+  width: 85%;
 }
-
 
 /* 주변 장소 리스트 컨테이너 */
 .AttractionDetail .nearby-locations-container {
-    margin-top: 70px;
+  margin-top: 70px;
 }
 
 .AttractionDetail .no-nearby-locations-message {
-    margin: 30px 0;
-    font-size: 16px; /* 텍스트 크기 조정 */
-    text-align: center; /* 가운데 정렬 */
-    color: #666; /* 부드러운 색상 */
+  margin: 30px 0;
+  font-size: 16px; /* 텍스트 크기 조정 */
+  text-align: center; /* 가운데 정렬 */
+  color: #666; /* 부드러운 색상 */
 }
 
 .AttractionDetail .nearby-locations-container > h4 {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .AttractionDetail .nearby-locations-list {
-    display: flex;
-    gap: 24px;
-    justify-content: flex-start;
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
 }
-  
+
 /* 주변 장소 카드 */
 .AttractionDetail .nearby-location-item {
-    width: calc((100% - 24px * 3) / 4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding-bottom: 70px;
+  width: calc((100% - 24px * 3) / 4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding-bottom: 70px;
 }
-  
+
 /* 카드 이미지 */
 .AttractionDetail .nearby-location-item .nearby-link > img {
-    margin-bottom: 8px;
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
 }
-  
+
 .nearby-link {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 .AttractionDetail .nearby-location-item h4 {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .AttractionDetail .nearby-location-item p {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .AttractionDetail .nearby-location-item .star-icon {
-    width: 14px;
+  width: 14px;
 }
 
 /* 지역 */
 .AttractionDetail .nearby-location-item p:first-of-type {
-    padding: 2px 0;
-    font-size: 16px;
-    color: #222;
+  padding: 2px 0;
+  font-size: 16px;
+  color: #222;
 }
 
 /* 별점 */
 .AttractionDetail .nearby-location-item p:nth-of-type(2) {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding-bottom: 2px;
-    /*color: #939393;*/
-    color: #666;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 2px;
+  /*color: #939393;*/
+  color: #666;
 }
 
 /* 별점 점수 */
@@ -218,230 +217,241 @@
 
 /* 거리 */
 .AttractionDetail .nearby-location-item p:nth-of-type(3) {
-    color: #aaa;
+  color: #aaa;
 }
-  
+
 /* 호버 효과 */
 .nearby-location-item:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999; /* 모달보다 아래위치 모달 z-index:9999임 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* 모달보다 아래위치 모달 z-index:9999임 */
 }
-
 
 /* 전체 리뷰 컨테이너 */
 .AttractionDetail .review-container {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 /* 리뷰 헤더 스타일 */
 .AttractionDetail .review-header {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid #d6d6d6;
-    padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 20px;
 }
 
 /* 총 리뷰수 스타일 */
 .AttractionDetail .review-header-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 /* 정렬 및 작성 버튼 컨테이너 */
 .AttractionDetail .review-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* 버튼 간격 */
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 버튼 간격 */
 }
 
 /* 리뷰 작성 버튼 */
 .AttractionDetail .review-header-button {
-    margin-left: auto;
-    padding: 8px 20px;
-    background-color: #222;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+  margin-left: auto;
+  padding: 8px 20px;
+  background-color: #222;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
-
 
 /* 정렬 옵션 스타일 */
 .AttractionDetail .review-header-sort {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
 }
 
 .AttractionDetail .sort-button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .AttractionDetail .sort-button.active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* 리뷰 컨테이너 */
 .AttractionDetail .review-main {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 각 리뷰 항목 */
 .AttractionDetail .review-item {
-    display: grid;
-    grid-template-columns: 10% auto 120px; /* 사용자 정보, 리뷰 내용, 리뷰 이미지 */
-    gap: 15px;
-    padding: 20px 0;
-    border-bottom: 1px solid #d6d6d6;
-    background-color: #fff;
+  display: grid;
+  grid-template-columns: 10% auto 120px; /* 사용자 정보, 리뷰 내용, 리뷰 이미지 */
+  gap: 15px;
+  padding: 20px 0;
+  border-bottom: 1px solid #d6d6d6;
+  background-color: #fff;
 }
 
 /* 사용자 정보 */
 .AttractionDetail .review-user-info {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .AttractionDetail .user-profile-img {
-    width: 65px;
-    height: 65px;
-    border: 1px solid #eaeaea;
-    border-radius: 50%;
-
+  width: 65px;
+  height: 65px;
+  border: 1px solid #eaeaea;
+  border-radius: 50%;
 }
 
 .AttractionDetail .user-profile-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .AttractionDetail .empty-profile-img {
-    width: 100%;
-    height: 100%;
-    background-color: #eaeaea;
+  width: 100%;
+  height: 100%;
+  background-color: #eaeaea;
 }
 
 .AttractionDetail .user-nickname {
-    font-weight: 500;
-    font-size: 14px;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .AttractionDetail .review-rating {
-    display: flex;
-    margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 /* 리뷰 내용 */
 .AttractionDetail .review-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* 위쪽 정렬 */
-    text-align: left; /* 왼쪽 정렬 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 위쪽 정렬 */
+  text-align: left; /* 왼쪽 정렬 */
 }
 
 .AttractionDetail .review-title {
-    font-weight: 500;
-    margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 
 .AttractionDetail .review-text {
-    color: #474747;
-    line-height: 150%;
+  color: #474747;
+  line-height: 150%;
 }
 
 /* 리뷰 이미지 */
 .AttractionDetail .review-images {
-    display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 */
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 5px; /* 내용과 간격 추가 */
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px; /* 내용과 간격 추가 */
 }
 
 .AttractionDetail .review-images img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    /*border: 1px solid #eaeaea;*/
-    border-radius: 4px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  /*border: 1px solid #eaeaea;*/
+  border-radius: 4px;
 }
 
 .AttractionDetail .review-date {
-    margin-top: 10px;
-    color: #939393;
-    font-size: 14px;
+  margin-top: 10px;
+  color: #939393;
+  font-size: 14px;
 }
 
 /* 리뷰 하단 부 (페이지관련) */
 /* 페이징 버튼 컨테이너 */
 .AttractionDetail .review-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 40px;
 }
 
 /* 페이징 버튼 */
 .AttractionDetail .pagination-button {
-    width: 27px;
-    height: 27px;
-    background-color: #fff;
-    border: 1px solid #D9D9D9;
-    cursor: pointer;
-    font-size: 16px;
+  width: 27px;
+  height: 27px;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .AttractionDetail .pagination-button:hover {
-    text-decoration: underline; /* 호버 시 밑줄 */
+  text-decoration: underline; /* 호버 시 밑줄 */
 }
 
 .AttractionDetail .pagination-button.active {
-    background-color: #222;
-    color: white;
-    border: none;
-    cursor: default; /* 현재 페이지 클릭 불가 */
-    text-decoration: none; /* 밑줄 제거 */
+  background-color: #222;
+  color: white;
+  border: none;
+  cursor: default; /* 현재 페이지 클릭 불가 */
+  text-decoration: none; /* 밑줄 제거 */
 }
 
 .AttractionDetail .pagination-button:disabled {
-    display: none;
+  display: none;
 }
 
 /* 페이지 구분용 점 */
 .AttractionDetail .pagination-ellipsis {
-    color: #666;
-    padding: 0 5px;
+  color: #666;
+  padding: 0 5px;
 }
 
+/* 전체 운영 시간 리스트 스타일 */
+.operating-hours-list {
+  margin-top: 8px;
+  line-height: 1.6;
+}
 
+/* 요일 스타일 */
+.operating-day {
+  font-size: 16px; /* 요일 폰트 크기 */
+  color: #222; /* 강조된 색상 */
+  display: inline-block; /* 한 줄 표시 */
+  margin-right: 8px; /* 시간과 간격 추가 */
+}
 
-
-
-
+/* 시간 스타일 */
+.operating-time {
+  font-size: 16px; /* 시간 폰트 크기 */
+  color: #555; /* 일반 색상 */
+  display: inline-block; /* 한 줄 표시 */
+}
