@@ -66,12 +66,11 @@ function Home() {
       .post(`${process.env.REACT_APP_BASE_URL}/api/ai/verify`, {}, { headers })
       .then((response) => {
         console.log('Recommendations', response.data);
-        const { locations, isRandomData } = response.data;
 
-        setRecommendations(locations);
+        setRecommendations(response.data);
 
         // 제목 설정
-        if (isRandomData) {
+        if (!token) {
           setTitle('Google 평점이 높은 추천 여행지');
         } else {
           setTitle('AI 추천 여행지');
@@ -165,23 +164,26 @@ function Home() {
         <section className="recommended" data-aos="fade-up">
           <h3 className="home-title">{title}</h3>
           <div className="card-container">
-            {recommendations.map((location, index) => (
-              <div
-                key={index}
-                className="card"
-                onClick={() =>
-                  navigate(`/attractionDetail/${location.locationId}`, {})
-                }
-              >
-                <Card
-                  image={location.placeImgUrl || ''} // 이미지 URL
-                  title={location.locationName || '장소 이름 없음'} // 장소 이름
-                  location={location.regionName || '지역 정보 없음'} // 지역 이름
-                  rating={`Google 평점: ${location.googleRating || 'N/A'}`} // 평점
-                  description={location.description || '설명이 없습니다.'} // 설명
-                />
-              </div>
-            ))}
+            {recommendations.map((location, index) => {
+              console.log('렌더링할 장소:', location); // ← 여기 추가!
+              return (
+                <div
+                  key={index}
+                  className="card"
+                  onClick={() =>
+                    navigate(`/attractionDetail/${location.locationId}`, {})
+                  }
+                >
+                  <Card
+                    image={location.placeImgUrl || ''}
+                    title={location.locationName || '장소 이름 없음'}
+                    location={location.regionName || '지역 정보 없음'}
+                    rating={`Google 평점: ${location.googleRating || 'N/A'}`}
+                    description={location.description || '설명이 없습니다.'}
+                  />
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -337,26 +339,6 @@ function Home() {
           </div>
         </div>
       </section>
-      {/*<section className="footer">*/}
-      {/*    <div className="footer-content">*/}
-      {/*        <h2 className="footer-logo">LOGO</h2>*/}
-      {/*        <p className="footer-contact">Contact to : ssw123c@gmail.com<br/>*/}
-      {/*            위 웹페이지는 비상업적 포트폴리오 목적으로 제작된 사이트입니다.*/}
-      {/*        </p>*/}
-
-      {/*        <div className="footer-links">*/}
-      {/*            <a href="#terms">이용약관</a> |*/}
-      {/*            <a href="#privacy"> 개인정보처리방침</a> |*/}
-      {/*            <a href="#copyright"> 저작권정책</a> |*/}
-      {/*            <a href="#reject"> 이메일주소무단수집거부</a> |*/}
-      {/*            <a href="#sitemap"> 사이트맵</a>*/}
-      {/*        </div>*/}
-      {/*    </div>*/}
-      {/*    <div className="footer-icons">*/}
-      {/*        <img src={youtube} alt="youtube"/>*/}
-      {/*        <img src={instagram} alt="instagram"/>*/}
-      {/*    </div>*/}
-      {/*</section>*/}
     </div>
   );
 }
